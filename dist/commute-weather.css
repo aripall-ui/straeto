@@ -14,6 +14,8 @@
 .weather-chip[data-ice] { border-color:var(--late); box-shadow:inset 0 0 0 1px var(--late); }
 .weather-chip b { font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:750; }
 #commute-summary-line { color:var(--muted); font-variant-numeric:tabular-nums; }
+.weather-ice-flag { color:var(--late); font-weight:750; }
+.weather-ice-flag::before { content:"· "; color:var(--muted); font-weight:400; }
 #commute-weather-icon { font-size:1rem; line-height:1; }
 #commute-weather-icon:empty { display:none; }
 .weather-chevron { width:6px; height:6px; margin-inline-start:2px; border:solid var(--muted); border-width:0 2px 2px 0; transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
