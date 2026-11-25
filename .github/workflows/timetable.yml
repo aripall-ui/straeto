@@ -1,0 +1,57 @@
+name: Uppfæra tímatöflu
+
+# Strætó birtir GTFS-tímatöflu sem nær aðeins nokkrar vikur fram í tímann.
+# Þetta ferli sækir hana daglega, endurgerir dist/timetable.json og birtir
+# vefinn ef eitthvað breyttist. Ef það mistekst sendir GitHub tölvupóst.
+
+on:
+  schedule:
+    - cron: '17 4 * * *'   # kl. 04:17 að íslenskum tíma (UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: timetable
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Sækja GTFS og endurgera tímatöflu
+        run: python3 tools/update-timetable.py
+
+      - name: Athuga gildistíma
+        run: |
+          python3 - <<'PY'
+          import datetime as dt, json
+          data = json.load(open('dist/timetable.json'))
+          last = dt.date(1970, 1, 1) + dt.timedelta(days=data['lastDay'])
+          days_left = (last - dt.date.today()).days
+          print(f'Tímataflan gildir til {last} ({days_left} dagar eftir)')
+          if days_left < 7:
+              raise SystemExit(f'::error::Tímataflan rennur út {last}. Strætó hefur ekki birt nýrri gögn.')
+          PY
+
+      - name: Vista og birta ef breyting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- dist/timetable.json; then
+            echo 'Engin breyting á tímatöflu.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist/timetable.json
+          git commit -m 'Uppfæra tímatöflu úr GTFS Strætó'
+          git push origin HEAD:main
+          # Push með GITHUB_TOKEN ræsir ekki önnur ferli, svo birtingin er ræst sérstaklega.
+          gh workflow run pages.yml --ref main

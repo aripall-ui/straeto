@@ -21,10 +21,11 @@ Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
   - `morning-plan.js`: sameiginlegir útreikningar og vistun plana (`localStorage`).
   - `commute-status.js`, `commute-weather.js`, `theme.js`: stöðutexti, veður og ljóst/dökkt útlit.
   - `att.js`, `att.css`: flipar og sjálfvirk átt (sjá ofar).
-  - `timetable.json`: pökkuð GTFS-tímatafla. Gildir til `lastDay` (20819 = 1. jan. 2027).
+  - `timetable.json`: pökkuð GTFS-tímatafla. Gildir til `lastDay` (dagar frá 1970-01-01). Strætó birtir bara ~6 vikur fram í tímann, svo hún er uppfærð sjálfkrafa daglega.
 - `dist/heim/`: heimleiðarappið. `index.html` + `heim.js` + eigin `style.css` (að hluta sameiginlegt með `dist/style.css`), `fleiri-ferdir/`. Notar manifest rótarinnar. Notar ekki `timetable.json`. Stopp og leiðir eru efst í `heim.js`. `localStorage`-lykill: `heim-limit-walking`.
 - `tools/update-timetable.py`: endurgerir `dist/timetable.json` úr GTFS-ZIP-skrá Strætó.
-- `.github/workflows/pages.yml`: birtir `dist/` á GitHub Pages (https://aripall-ui.github.io/straeto/) við hvert push á `main`.
+- `.github/workflows/timetable.yml`: sækir GTFS daglega kl. 04:17, endurgerir `timetable.json`, ýtir á `main` ef breyting og ræsir birtingu. Mistekst ef færri en 7 dagar eru eftir af gildistíma (GitHub sendir þá tölvupóst).
+- `.github/workflows/pages.yml`: birtir `dist/` á GitHub Pages (https://aripall-ui.github.io/straeto/) við hvert push á `main`. Strætó-API-ið samþykkir beiðnir frá þeirri slóð (CORS staðfest 25. nóv. 2026).
 - `.openai/hosting.json`, `docs/heim-hosting.json`: stillingar gömlu ChatGPT Sites-hýsingarinnar.
 - `docs/`: handoff og önnur skjöl.
 
@@ -51,7 +52,6 @@ Hægt er að athuga setningafræði með `node --check dist/**/*.js`. Engin sjá
 - **Cache-busting:** HTML-síðurnar hlaða skrám með `?v=<heiti>`. Þegar JS eða CSS breytist þarf að breyta `v=`-gildinu í öllum HTML-skrám sem hlaða skránni.
 - **`localStorage`-lyklar** (`i-vinnuna-*`) geyma vistuð plön notandans. Ekki endurnefna þá án yfirfærslu.
 - **Tími:** Notar `Atlantic/Reykjavik`. GTFS-tímar yfir 24:00 tilheyra fyrri þjónustudegi.
-- **`update-timetable.py` skrifar ekki `lastDay`.** Bæta þarf honum við áður en endurgerð tímatafla er birt.
 - Fastar forsendur: 40 mín. til að gera sig til, 100 skref á mínútu, 13 er aðalleið.
 - Breyttu sem minnstu í hvert sinn og haltu útliti og orðalagi nema beðið sé um annað. Notandinn hefur skýrar skoðanir á hönnuninni (sjá kafla 6 og 9 í handoff).
 

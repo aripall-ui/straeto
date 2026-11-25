@@ -92,7 +92,9 @@ def build(archive):
         services[service] = sorted(dates[service])
     if not all(by_route.values()):
         raise ValueError('The GTFS file is missing trips for at least one boarding stop')
-    return {'routes': by_route, 'services': services}
+    # Síðasti dagur sem einhver þjónusta gildir. Appið varar við útrunninni skrá eftir hann.
+    last_day = max(day for days in services.values() for day in days)
+    return {'routes': by_route, 'services': services, 'lastDay': last_day}
 
 
 def main():
