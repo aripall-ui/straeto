@@ -1,9 +1,10 @@
 /* Nándarkort og pínulítill „Kort“-hnappur í haus spjaldsins. */
-.kort-takki { display:inline-flex; align-items:center; gap:4px; margin-inline-start:auto; min-height:24px; padding:1px 8px; border:1px solid var(--line); border-radius:999px; background:transparent; color:var(--muted); font:inherit; font-size:.72rem; font-weight:650; cursor:pointer; flex:none; }
-.kort-takki:hover { color:var(--ink); border-color:var(--muted); }
-.kort-takki[aria-expanded=true] { color:var(--signal); border-color:var(--signal); }
+.kort-takki { position:relative; display:inline-flex; align-items:center; gap:5px; margin-inline-start:auto; min-height:36px; padding:4px 13px; border:1px solid var(--line); border-radius:999px; background:var(--paper); color:var(--signal); font:inherit; font-size:.85rem; font-weight:700; cursor:pointer; flex:none; }
+.kort-takki::before { content:''; position:absolute; inset:-4px; }
+.kort-takki:hover { border-color:var(--muted); }
+.kort-takki[aria-expanded=true] { color:var(--on-signal, var(--paper)); background:var(--signal); border-color:var(--signal); }
 .kort-takki[hidden] { display:none; }
-.kort-takki svg { width:10px; height:10px; }
+.kort-takki svg { width:13px; height:13px; }
 .naerkort { margin:0; padding:10px clamp(12px,4vw,24px) 12px; background:var(--inset); border-top:1px solid var(--line); }
 .naerkort[hidden] { display:none; }
 .naerkort svg { display:block; width:100%; height:auto; max-height:260px; overflow:visible; }
