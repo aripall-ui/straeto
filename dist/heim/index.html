@@ -15,7 +15,10 @@
 <script src="../theme.js"></script>
 <link rel="stylesheet" href="../heim/style.css?v=afstaedar-slodir">
 <link rel="stylesheet" href="../commute-status.css?v=footer">
+<link rel="stylesheet" href="../morgundagur.css?v=1">
 <script src="../commute-status.js?v=timing-label" defer></script>
+<script src="../morning-plan.js?v=morgundagur" defer></script>
+<script src="../morgundagur.js?v=1" defer></script>
 <script src="../heim/heim.js?v=afstaedar-slodir" defer></script>
 </head>
 <body data-view="main">
@@ -42,6 +45,11 @@
 <dl><div><dt>Brottför</dt><dd id="departure">—</dd></div><div class="hero-duration"><dt>Ferðatími</dt><dd id="duration">—</dd></div><div><dt id="arrival-label">Koma á Ásvallagötu</dt><dd id="arrival">—</dd></div></dl>
 </div>
 </section>
+<a id="morgun-kort" class="morgun-kort" href="../undirbua-morguninn/" hidden>
+<span class="morgun-kort-takn"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg></span>
+<span class="morgun-kort-texti"><b id="morgun-kort-titill">Ekkert plan fyrir morgundaginn</b><span>Undirbúa morguninn</span></span>
+<span class="morgun-kort-or" aria-hidden="true">→</span>
+</a>
 <section class="board" aria-labelledby="next-direct-heading">
 <header class="board-header"><span class="route route-13">13</span><h2 id="next-direct-heading">RÚV → Ásvallagata</h2></header>
 <table class="station" aria-label="Næstu tvær ferðir á leið 13">
@@ -64,7 +72,7 @@
 <tbody id="direct-rides"><tr><td colspan="4">Sæki tíma…</td></tr></tbody>
 </table>
 </section>
-<footer class="commute-footer"><a href="../">Ertu að fara í vinnuna?</a></footer>
+<a id="morgun-flis" class="morgun-flis" href="../undirbua-morguninn/" hidden><span class="visually-hidden">Breyta plani: </span><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg><span id="morgun-flis-dagur">Á morgun</span> <b id="morgun-flis-timi"></b><span class="morgun-flis-breyta" aria-hidden="true">›</span></a>
 </main>
 </body>
 </html>

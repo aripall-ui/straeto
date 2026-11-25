@@ -27,6 +27,12 @@ Markmiðið til lengri tíma er að fleiri geti sett upp sínar eigin ferðir og
 
 Á forsíðu sækir `currentSavedRides()` fyrst plan dagsins og fjarlægir farnar ferðir. Ef einhver ferð stendur eftir birtist planið. Næst kemur til greina næsti dagur úr þjónustuglugganum ef honum er lokað, annars dagsetningin úr `planDate()`. Framtíðarplan birtist ef þjónusta er lokuð eða ef planið er sérstaklega vistað fyrir daginn. Endurtekið framtíðarplan tekur því ekki almennt yfir lifandi forsíðu á meðan þjónusta er opin. Sérstakt plan fyrir morgundaginn getur tekið yfir strax eftir vistun. Sé hvorugt planið tiltækt sýnir forsíðan lifandi brottfarir eða skjá fyrir lok þjónustu.
 
+**Næsti vinnudagur (25. nóv.).** Textahlekkirnir **Undirbúa morguninn** og **Ertu á leiðinni heim?** / **Ertu að fara í vinnuna?** voru fjarlægðir af forsíðunum (flipar sjá um áttina). Í staðinn sýnir `morgundagur.js` á báðum forsíðum, eftir tíma dags:
+- **Morgunn:** ekkert frá 05:00 þar til 45 mín. eftir síðustu planaða brottför dagsins, eða til 10:00 ef ekkert plan er í dag.
+- **Plan til** fyrir næsta dag með ferðum (vistað fyrir daginn eða virka daga plan): lítil flís neðst, t.d. „Á morgun 08:12“ eða „Mán. 08:12“, sem opnar skipulagið fyrir þann dag.
+- **Ekkert plan** fyrir morgundaginn og hann er virkur dagur: spjald „Ekkert plan fyrir morgundaginn · Undirbúa morguninn“ undir aðalspjaldinu (Í vinnuna: undir ferðaspjaldinu eða „Strætó er hættur að ganga í dag“; Heim: undir Valin ferð).
+- **Helgi fram undan og ekkert plan:** ekkert sést. Ekkert sést heldur á meðan Mínar ferðir eru sýndar.
+
 ### Skipuleggja og vista ferð
 
 - **Dagsetning og mæting.** Sjálfgefin dagsetning er dagurinn í dag fyrir kl. 05:00 og dagurinn á morgun frá kl. 05:00, nema gild dagsetning sé gefin í slóð. Mætingarmark er valkvætt og sjálfgefið við nýtt plan er **09:45**. Í lista fyrir daginn í dag eru liðnar brottfarir faldar við hleðslu nema þær séu þegar valdar.

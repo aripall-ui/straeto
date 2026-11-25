@@ -1,0 +1,16 @@
+/* Plan fyrir næsta vinnudag: spjald þegar plan vantar, flís neðst þegar það er til. */
+.morgun-kort { display:flex; align-items:center; gap:12px; margin:16px 0; padding:14px clamp(12px,4vw,24px); border:1px solid var(--signal); border-radius:16px; background:var(--paper); color:var(--ink); text-decoration:none; }
+.morgun-kort:hover { background:var(--inset); }
+.morgun-kort-takn { display:grid; place-items:center; width:42px; height:42px; border-radius:10px; background:var(--inset); color:var(--signal); flex:none; }
+.morgun-kort-takn svg { width:22px; height:22px; }
+.morgun-kort-texti { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
+.morgun-kort-texti b { font-size:1rem; }
+.morgun-kort-texti span { color:var(--muted); font-size:.875rem; }
+.morgun-kort-or { color:var(--signal); font-size:1.25rem; font-weight:700; }
+.morgun-flis { display:flex; align-items:center; gap:6px; width:fit-content; min-height:44px; margin:20px auto 0; padding:4px 16px; border:1px solid var(--line); border-radius:999px; background:var(--paper); color:var(--signal); font-size:.9rem; font-weight:700; text-decoration:none; }
+.morgun-flis:hover { border-color:var(--muted); }
+.morgun-flis svg { width:18px; height:18px; flex:none; }
+.morgun-flis b { font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:750; }
+.morgun-flis .morgun-flis-breyta { color:var(--muted); font-weight:600; }
+.morgun-kort[hidden], .morgun-flis[hidden] { display:none; }
+.morgun-kort:focus-visible, .morgun-flis:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }

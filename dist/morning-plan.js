@@ -199,7 +199,7 @@ const morningPlan = (() => {
   }
 
   return {
-    minute, routes, readyMinutes, homeWalkDefaults, today, planDate, time, dateLabel, tripKey, read,
+    minute, routes, readyMinutes, readAll, homeWalkDefaults, today, planDate, time, dateLabel, tripKey, read,
     save, removeRides, clearPast, timetableRides, workArrival, journeyTimes, late, weekdayPlan,
     hasOverride, saveWeekday, useWeekday, removeWeekday, slotTime, preferred, setPreferred
   };

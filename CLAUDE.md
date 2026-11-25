@@ -21,6 +21,7 @@ Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
   - `morning-plan.js`: sameiginlegir útreikningar og vistun plana (`localStorage`).
   - `commute-status.js`, `commute-weather.js`, `theme.js`: stöðutexti, veður og ljóst/dökkt útlit.
   - `att.js`, `att.css`: flipar og sjálfvirk átt (sjá ofar).
+  - `morgundagur.js`, `morgundagur.css`: plan fyrir næsta vinnudag, notað á báðum forsíðum. Flís neðst ef plan er til, spjald ef það vantar, ekkert á morgnana. Krefst `morning-plan.js`.
   - `timetable.json`: pökkuð GTFS-tímatafla. Gildir til `lastDay` (dagar frá 1970-01-01). Strætó birtir bara ~6 vikur fram í tímann, svo hún er uppfærð sjálfkrafa daglega.
 - `dist/heim/`: heimleiðarappið. `index.html` + `heim.js` + eigin `style.css` (að hluta sameiginlegt með `dist/style.css`), `fleiri-ferdir/`. Notar manifest rótarinnar. Notar ekki `timetable.json`. Stopp og leiðir eru efst í `heim.js`. `localStorage`-lykill: `heim-limit-walking`.
 - `tools/update-timetable.py`: endurgerir `dist/timetable.json` úr GTFS-ZIP-skrá Strætó.

@@ -475,7 +475,7 @@ function renderSavedRides(now, mainRide, sortedRides) {
 function renderPrimary(now) {
   const service = serviceState(now);
   savedBoard = currentSavedRides(now, service);
-  for (const id of ['departures-board', 'alternatives-board', 'commute-feed', 'prepare-morning']) {
+  for (const id of ['departures-board', 'alternatives-board', 'commute-feed']) {
     byId(id).hidden = service.closed || Boolean(savedBoard);
   }
   byId('refresh').hidden = service.closed && !savedBoard?.morning;
@@ -499,7 +499,6 @@ function renderPrimary(now) {
   }
 
   if (service.closed) {
-    byId('night-prepare').href = appRoot + 'undirbua-morguninn/?' + new URLSearchParams({dagur: service.date});
     boardRide = undefined;
     selectedRide = null;
     nextBoardChange = service.boundary;
@@ -755,8 +754,9 @@ if (mainPage) {
       return;
     }
     renderBoard(now);
+    morgundagur.paint();
     const focus = savedBoard ? byId('saved-ride-title')
-      : byId('night-board').hidden ? byId('prepare-morning') : byId('night-prepare');
+      : [byId('morgun-kort'), byId('morgun-flis')].find(link => !link.hidden) ?? document.querySelector('.att-val [aria-current]');
     focus.focus({preventScroll: true});
   });
   byId('next-ride').addEventListener('click', () => {

@@ -16,11 +16,13 @@
 <link rel="stylesheet" href="style.css?v=afstaedar-slodir">
 <link rel="stylesheet" href="commute-status.css?v=footer">
 <link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
+<link rel="stylesheet" href="morgundagur.css?v=1">
 <link rel="stylesheet" href="commute-weather.css?v=halka">
 <script src="commute-status.js?v=timing-label" defer></script>
-<script src="morning-plan.js?v=trip-details" defer></script>
+<script src="morning-plan.js?v=morgundagur" defer></script>
+<script src="morgundagur.js?v=1" defer></script>
 <script src="commute-weather.js?v=mm" defer></script>
-<script src="app.js?v=afstaedar-slodir" defer></script>
+<script src="app.js?v=morgundagur" defer></script>
 </head>
 <body data-view="main">
 <main>
@@ -71,7 +73,6 @@
 </section>
 <section id="night-board" class="board night-board" aria-labelledby="night-heading" hidden>
 <h2 id="night-heading">Strætó er hættur að ganga í dag</h2>
-<a href="undirbua-morguninn/" class="plan-link" id="night-prepare">Undirbúa morguninn</a>
 </section>
 <section id="departures-board" class="board" aria-labelledby="stop" hidden>
 <header class="board-header"><span id="main-route" class="route route-13">13</span><h2 id="stop">Ásvallagata → Sléttuvegur</h2></header>
@@ -102,12 +103,16 @@
 <tbody id="primary"><tr><td colspan="3">Sæki tíma…</td></tr></tbody>
 </table>
 </section>
-<a id="prepare-morning" class="plan-link" href="undirbua-morguninn/" hidden>Undirbúa morguninn</a>
+<a id="morgun-kort" class="morgun-kort" href="undirbua-morguninn/" hidden>
+<span class="morgun-kort-takn"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg></span>
+<span class="morgun-kort-texti"><b id="morgun-kort-titill">Ekkert plan fyrir morgundaginn</b><span>Undirbúa morguninn</span></span>
+<span class="morgun-kort-or" aria-hidden="true">→</span>
+</a>
 <section id="alternatives-board" class="teaser" aria-labelledby="teaser-heading" hidden>
 <div class="teaser-header"><h2 id="teaser-heading">Á hraðferð?</h2><a id="all-rides" href="a-hradferd/">Sjá allar ferðir</a></div>
 <div id="alternatives" class="teaser-grid"><p>Sæki tíma…</p></div>
 </section>
-<footer class="commute-footer"><a href="heim/">Ertu á leiðinni heim?</a></footer>
+<a id="morgun-flis" class="morgun-flis" href="undirbua-morguninn/" hidden><span class="visually-hidden">Breyta plani: </span><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg><span id="morgun-flis-dagur">Á morgun</span> <b id="morgun-flis-timi"></b><span class="morgun-flis-breyta" aria-hidden="true">›</span></a>
 </main>
 </body>
 </html>
