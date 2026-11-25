@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="style.css?v=afstaedar-slodir">
 <link rel="stylesheet" href="commute-status.css?v=footer">
 <link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
-<link rel="stylesheet" href="commute-weather.css?v=compact">
+<link rel="stylesheet" href="commute-weather.css?v=flis">
 <script src="commute-status.js?v=timing-label" defer></script>
 <script src="morning-plan.js?v=trip-details" defer></script>
-<script src="commute-weather.js?v=compact" defer></script>
+<script src="commute-weather.js?v=flis" defer></script>
 <script src="app.js?v=afstaedar-slodir" defer></script>
 </head>
 <body data-view="main">
@@ -30,6 +30,27 @@
 <a href="./heim/">Heim</a>
 </nav>
 <p id="departed-trips" class="departed-trips" role="status"></p>
+<div class="status-row">
+<p id="commute-feed" class="commute-feed" role="status" hidden>Sæki tíma frá Strætó…</p>
+<div id="commute-weather" class="commute-weather" hidden>
+<button id="commute-weather-toggle" class="weather-chip" type="button" aria-expanded="false" aria-controls="commute-weather-values" hidden>
+<span class="visually-hidden">Veðurspá: </span><span id="commute-weather-icon" aria-hidden="true"></span><b id="commute-summary-temperature">—</b><span id="commute-summary-line"></span><span id="commute-ice-flag" class="visually-hidden" hidden>, líkur á hálku</span><span class="weather-chevron" aria-hidden="true"></span>
+</button>
+<p id="commute-weather-status" class="weather-status" role="status">Sæki veðurspá…</p>
+<div id="commute-weather-values" class="weather-panel" hidden>
+<dl class="weather-grid">
+<div><dt>Veður</dt><dd id="commute-weather-condition" class="weather-word">—</dd></div>
+<div><dt>Eins og</dt><dd id="commute-feels">—</dd></div>
+<div><dt>Lægst / hæst</dt><dd id="commute-range">—</dd></div>
+<div><dt>Hviður</dt><dd id="commute-gusts">—</dd></div>
+<div><dt>Úrkoma</dt><dd id="commute-precipitation">—</dd></div>
+<div><dt>Kl.</dt><dd id="commute-weather-period">—</dd></div>
+</dl>
+<p id="commute-ice" class="commute-ice" hidden></p>
+<p class="weather-source">Vesturbær · <a href="https://open-meteo.com/">Open-Meteo</a></p>
+</div>
+</div>
+</div>
 <section id="saved-morning" class="board saved-morning" aria-labelledby="saved-morning-heading" hidden>
 <header class="board-header saved-morning-header">
 <div><h2 id="saved-morning-heading">Mínar ferðir</h2><p id="saved-morning-date" class="plan-note"></p></div>
@@ -48,47 +69,10 @@
 <div id="saved-morning-rides" class="plan-list"></div>
 <p id="saved-morning-error" class="plan-note saved-morning-missing" role="alert" hidden>Ekki tókst að vista breytinguna í þessum vafra.</p>
 </section>
-<p id="commute-feed" class="commute-feed" role="status" hidden>Sæki tíma frá Strætó…</p>
 <section id="night-board" class="board night-board" aria-labelledby="night-heading" hidden>
 <h2 id="night-heading">Strætó er hættur að ganga í dag</h2>
 <a href="undirbua-morguninn/" class="plan-link" id="night-prepare">Undirbúa morguninn</a>
 </section>
-<div id="commute-weather-day">
-<section id="commute-weather" class="board commute-weather" aria-labelledby="commute-weather-title" hidden>
-<header class="commute-weather-header">
-<h2 id="commute-weather-title">Veðurspá</h2>
-<p id="commute-weather-period"></p>
-<p class="commute-weather-source"><a href="https://open-meteo.com/">Open-Meteo</a></p>
-</header>
-<button id="commute-weather-toggle" class="weather-summary" type="button" aria-expanded="false" aria-controls="commute-weather-values" hidden>
-<span id="commute-weather-icon" aria-hidden="true"></span>
-<span id="commute-summary-temperature" class="weather-summary-temperature">—</span>
-<span class="weather-summary-text"><span id="commute-weather-condition"></span><span id="commute-summary-line" class="weather-summary-line"></span></span>
-<span class="weather-summary-more"><span class="weather-summary-label">Nánar</span><span class="weather-chevron" aria-hidden="true"></span></span>
-</button>
-<div id="commute-weather-values" hidden>
-<div class="weather-overview">
-<div class="weather-thermal">
-<dl class="weather-temperature">
-<div class="weather-reading"><dt>Hiti</dt><dd id="commute-temperature">—</dd></div>
-<div class="weather-feels"><dt>Með vindkælingu</dt><dd id="commute-feels">—</dd></div>
-</dl>
-<dl class="weather-range" aria-label="Hitabil dagsins">
-<div><dt>Lægst</dt><dd id="commute-low">—</dd></div>
-<div><dt>Hæst</dt><dd id="commute-high">—</dd></div>
-</dl>
-</div>
-</div>
-<dl class="weather-details">
-<div><dt>Vindur</dt><dd id="commute-wind">—</dd></div>
-<div><dt>Hviður</dt><dd id="commute-gusts">—</dd></div>
-<div><dt>Úrkoma</dt><dd id="commute-precipitation">—</dd></div>
-</dl>
-</div>
-<p id="commute-ice" class="commute-ice" hidden></p>
-<p id="commute-weather-status" role="status">Sæki veðurspá…</p>
-</section>
-</div>
 <section id="departures-board" class="board" aria-labelledby="stop" hidden>
 <header class="board-header"><span id="main-route" class="route route-13">13</span><h2 id="stop">Ásvallagata → Sléttuvegur</h2></header>
 <div class="hero">
@@ -118,7 +102,6 @@
 <tbody id="primary"><tr><td colspan="3">Sæki tíma…</td></tr></tbody>
 </table>
 </section>
-<div id="commute-weather-night"></div>
 <a id="prepare-morning" class="plan-link" href="undirbua-morguninn/" hidden>Undirbúa morguninn</a>
 <section id="alternatives-board" class="teaser" aria-labelledby="teaser-heading" hidden>
 <div class="teaser-header"><h2 id="teaser-heading">Á hraðferð?</h2><a id="all-rides" href="a-hradferd/">Sjá allar ferðir</a></div>
