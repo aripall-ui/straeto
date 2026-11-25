@@ -180,6 +180,11 @@ Atriðin hér eru staðfest í kóða eða gögnum, eða merkt sem háð ytri a�
    - **Útlit í stíl við gamaldags skiptimiða** úr kassa vagnsins: hvítur, krumpaður hitapappír, jafnbreitt prentletur, haus í hástöfum, dagsetning og tími (`20/12/2024 09:23`), stórt **Gildir til: 10:38** (75 mín. eftir útgáfu) og vefslóð neðst. Sækja innblástur í útlitið en ekki afrita merki eða vörumerki Strætó.
    - **Gögn:** `BusLocationByStop` skilar `lat`, `lng`, `busId` og `trip{id}` fyrir hverja komu á stopp. Komutími á hvert stopp krefst fyrirspurnar fyrir stoppin á leiðinni (röð þeirra fæst úr GTFS `stop_times`), og `trip{id}` tengir ferðina milli stoppa. Athuga þarf hvort ein fyrirspurn með mörgum stoppum dugi og hve oft má spyrja.
 
+7. **Stillingasíða (ósk 25. nóv.).**
+   - **Efst: göngutímar.** Setja og vista göngutíma til og frá stoppum (heimili → Ásvallagata, HÍ B, HÍ C; endastopp → vinna; RÚV, Kringlan, Kringlumýrarbraut, Leiti → stopp á heimleið og frá stoppi heim). Í dag eru göngutímar slegnir inn í skipulagsforminu (`undirbua-morguninn`) og vistaðir með hverju plani, og sjálfgefnir gildir eru fastir í `morning-plan.js` (`homeWalkDefaults`). Stillingarnar ættu að verða sjálfgefnu gildin.
+   - **Útlit.** Velja milli útfærslna, t.d. örvaeiningar fyrir aðrar ferðir: A (merki „Brottför“ yfir einingunni, núverandi) eða C (breið eining yfir alla breidd með Brottför í miðju, koma og ferðatími í línu fyrir neðan). Ljóst/dökkt útlit gæti líka flust þangað.
+   - **Fleiri stopp?** Skoða hvort ástæða sé til að bæta við stoppum. Það rekst á hugmyndina um tvær fastar áttir, **Í vinnuna** og **Heim**: með frjálsum stoppum er appið ekki lengur bara vinnuferð. Tengist framtíðaróskinni um þriðju tegund ferða í CLAUDE.md (`att.js` og `.att-val` gera ráð fyrir fleiri áttum) og lið 3 og 5 hér að ofan. Ákveða þarf hvort ný stopp fari inn í núverandi áttir sem varakostir eða í nýja átt.
+
 ## 11. Hýsing
 
 **Núna.** ChatGPT Sites birtir staðbundnar skrár úr `dist/` samkvæmt `.openai/hosting.json`. Aðgangsstillingin var staðfest sem sérsniðin með eiganda einum. Innskráning og aðgangur eru á hýsingarstigi. Appkóðinn sjálfur inniheldur ekki aðgangsstýringu eða notendagagnagrunn. [Í vinnuna](https://aribus-13-asvallagata.modernjuice4.chatgpt.site/)
