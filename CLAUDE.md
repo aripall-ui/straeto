@@ -1,6 +1,8 @@
 # CLAUDE.md — straeto
 
-Persónuleg strætó-vefsíða. Fyrsta appið, **„Í vinnuna“**, er brottfararskjár fyrir vinnuferð eigandans: leið 13 frá Ásvallagötu að RÚV, með leiðir 1, 3 og 6 frá HÍ sem varakosti, morgunplan, niðurtalningu og veður. Það var smíðað í ChatGPT Sites (útgáfur 1–44) og flutt hingað óbreytt 25. nóv. 2026. Heimleiðarappið (`heim-asvallagata`) er á leiðinni inn.
+Persónuleg strætó-vefsíða. Fyrsta appið, **„Í vinnuna“**, er brottfararskjár fyrir vinnuferð eigandans: leið 13 frá Ásvallagötu að RÚV, með leiðir 1, 3 og 6 frá HÍ sem varakosti, morgunplan, niðurtalningu og veður. Annað appið, **„Heim“** (`dist/heim/`), sýnir heimferðina frá RÚV: leið 13 að Ásvallagötu og aðra kosti (11, 3, 6, 1, og 18 með skiptum í 13 á Skeggjagötu). Bæði voru smíðuð í ChatGPT Sites (Í vinnuna v44, Heim v16) og flutt hingað 25. nóv. 2026.
+
+**Markmið notandans:** að sameina öppin í eitt app. Núna eru þau tvö öpp á sama uppruna sem deila `theme.js`, `commute-status.*` og letri.
 
 Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
 
@@ -15,6 +17,7 @@ Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
   - `morning-plan.js`: sameiginlegir útreikningar og vistun plana (`localStorage`).
   - `commute-status.js`, `commute-weather.js`, `theme.js`: stöðutexti, veður og ljóst/dökkt útlit.
   - `timetable.json`: pökkuð GTFS-tímatafla. Gildir til `lastDay` (20819 = 1. jan. 2027).
+- `dist/heim/`: heimleiðarappið. `index.html` + `heim.js` + eigin `style.css` (að hluta sameiginlegt með `dist/style.css`), `fleiri-ferdir/`, eigin manifest og tákn með scope `/heim/`. Notar ekki `timetable.json`. Stopp og leiðir eru efst í `heim.js`. `localStorage`-lykill: `heim-limit-walking`.
 - `tools/update-timetable.py`: endurgerir `dist/timetable.json` úr GTFS-ZIP-skrá Strætó.
 - `.openai/hosting.json`: stilling fyrir gömlu ChatGPT Sites-hýsinguna.
 - `docs/`: handoff og önnur skjöl.

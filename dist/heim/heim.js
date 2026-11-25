@@ -249,7 +249,7 @@ function render(now) {
     featured?.transfer ? 'Skeggjagata · 13 kl. ' + timestring(featured.transfer) + ' · ' + transferNote(featured) : '';
   const active = document.activeElement?.dataset.ride;
   const link = byId(main ? 'all-rides' : 'back-home');
-  const path = main ? '/fleiri-ferdir/' : '/';
+  const path = main ? '/heim/fleiri-ferdir/' : '/heim/';
   link.href = selected ? path + '?' + new URLSearchParams({ferd: selected}) : path;
   renderRows('next-direct', direct.slice(0, 2), true, now);
   renderRows('direct-rides', direct.slice(2, 5), false, now);
