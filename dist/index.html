@@ -10,6 +10,8 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-v3.png" sizes="180x180">
 <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
 <meta name="apple-mobile-web-app-title" content="Í vinnuna">
+<script src="att.js?v=1" data-att="vinna" data-forsida></script>
+<link rel="stylesheet" href="att.css?v=1">
 <script src="theme.js"></script>
 <link rel="stylesheet" href="style.css?v=afstaedar-slodir">
 <link rel="stylesheet" href="commute-status.css?v=footer">
@@ -23,6 +25,10 @@
 <body data-view="main">
 <main>
 <header class="masthead"><h1 class="wordmark"><a href="./" aria-label="Í vinnuna, forsíða"><span class="wordmark-initial"><span>Í</span></span> vinnuna</a></h1><div class="masthead-actions"><div class="theme-picker" role="group" aria-label="Útlit"><button type="button" data-theme-choice="light" aria-label="Ljóst útlit" aria-pressed="false"><span aria-hidden="true">☀︎</span></button><button type="button" data-theme-choice="dark" aria-label="Dökkt útlit" aria-pressed="false"><span aria-hidden="true">☾</span></button></div><button id="refresh" type="button" aria-label="Uppfæra tíma" title="Uppfæra tíma">↻</button></div></header>
+<nav class="att-val" aria-label="Átt">
+<a href="./" aria-current="page">Í vinnuna</a>
+<a href="./heim/">Heim</a>
+</nav>
 <p id="departed-trips" class="departed-trips" role="status"></p>
 <section id="saved-morning" class="board saved-morning" aria-labelledby="saved-morning-heading" hidden>
 <header class="board-header saved-morning-header">

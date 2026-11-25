@@ -1,0 +1,5 @@
+.att-val{display:flex;margin:-6px 0 18px;padding:4px;gap:4px;border:1px solid var(--line);border-radius:999px;background:var(--paper)}
+.att-val a{flex:1;display:grid;place-items:center;min-height:44px;padding:0 12px;border-radius:999px;color:var(--ink);font-weight:750;text-decoration:none}
+.att-val a:hover{background:var(--inset)}
+.att-val a[aria-current=page]{color:var(--canvas);background:var(--signal)}
+.att-val a:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
