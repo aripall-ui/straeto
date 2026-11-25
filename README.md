@@ -1,0 +1,2 @@
+# straeto
+Betra strætó-app
