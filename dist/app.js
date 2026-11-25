@@ -29,7 +29,6 @@ let selectedRide = mainPage ? null : new URLSearchParams(window.location.search)
 let timetable;
 let boardRide;
 let nextBoardChange = Infinity;
-let universitySteps = [];
 let savedBoard;
 let serviceWindows;
 let planCleanupDate;
@@ -41,6 +40,15 @@ const stopOrder = new Intl.Collator('is-IS');
 const stepCountFormat = new Intl.NumberFormat('is-IS');
 const walkingStepsPerMinute = 100;
 let tripSort = 'departure';
+// Ferðalisti forsíðu: röðun (departure, arrival, walk), mest/minnst labb og leiðaval (beint, annad).
+const listKey = 'i-vinnuna-ferdalisti';
+const listView = {sort: 'departure', most: false, group: ''};
+try {
+  const saved = JSON.parse(localStorage.getItem(listKey));
+  if (saved && typeof saved === 'object') Object.assign(listView, saved);
+} catch {
+  // Sjálfgefin röðun gildir ef geymslan er ekki tiltæk.
+}
 try {
   const savedSort = localStorage.getItem(sortKey);
   if (savedSort === 'arrival' || savedSort === 'stop') tripSort = savedSort;
@@ -471,7 +479,7 @@ function renderSavedRides(now, mainRide, sortedRides) {
 function renderPrimary(now) {
   const service = serviceState(now);
   savedBoard = currentSavedRides(now, service);
-  for (const id of ['departures-board', 'alternatives-board', 'commute-feed']) {
+  for (const id of ['departures-board', 'commute-feed']) {
     byId(id).hidden = service.closed || Boolean(savedBoard);
   }
   byId('refresh').hidden = service.closed && !savedBoard?.morning;
@@ -523,20 +531,91 @@ function renderPrimary(now) {
     byId('stop').textContent = origin + ' → ' + routes[number].sign;
   }
   byId('ride-label').textContent = chosen ? 'Valin ferð' : 'Næsti vagn';
-  // Frá HÍ (1 og 3 frá HÍ B, 6 frá HÍ C): örvar fram og aftur milli ferða þaðan í tímaröð.
-  const fromUniversity = boardRide && boardRide.number !== '13';
-  const universityRides = university.flat().sort((a, b) => a.at - b.at || rideKey(a).localeCompare(rideKey(b)));
-  const position = universityRides.findIndex(trip => rideKey(trip) === selectedRide);
-  universitySteps = fromUniversity ? [universityRides[position - 1], universityRides[position + 1]] : [];
-  byId('hi-stepper').hidden = !fromUniversity;
-  byId('departure').hidden = fromUniversity;
-  byId('hi-time').textContent = fromUniversity ? clock.format(boardRide.at) : '';
-  byId('next-ride').hidden = !chosen || fromUniversity;
-  byId('hi-prev').disabled = !universitySteps[0];
-  byId('hi-next').disabled = !universitySteps[1];
-  byId('all-rides').href = chosen ? appRoot + 'a-hradferd/?' + new URLSearchParams({ferd: selectedRide}) : appRoot + 'a-hradferd/';
-  renderRideRows('primary', local.slice(0, 5), now, unavailable.has('13'));
-  renderPreview(preview);
+  byId('next-ride').hidden = !chosen;
+  renderTripList([...local, ...university.flat()], now);
+}
+
+// Göngur fyrir ferð: að stoppi úr virka daga plani eða sjálfgefnu gildi, frá stoppi úr plani (annars 0).
+function walksFor(trip) {
+  const weekly = morningPlan.weekdayPlan();
+  const from = morningPlan.routes[trip.number].from;
+  const home = weekly?.homeWalking?.[from] ?? morningPlan.homeWalkDefaults[from] ?? 0;
+  const work = morningPlan.destinationWalk(trip, weekly?.walking);
+  return {from, home, work, total: home + work, inWork: morningPlan.workArrival(trip, weekly?.walking)};
+}
+
+function renderTripList(rides, now) {
+  const upcomingRides = rides.filter(trip => trip.at >= now).sort((a, b) => a.at - b.at);
+  const soon = upcomingRides.filter(trip => trip.at <= now + 60 * minute);
+  let shown = soon.length >= 4 ? soon : upcomingRides.slice(0, 4);
+  if (listView.group) shown = shown.filter(trip => (trip.number === '13') === (listView.group === 'beint'));
+  const info = new Map(shown.map(trip => [trip, walksFor(trip)]));
+  const direction = listView.most ? -1 : 1;
+  const order = {
+    departure: (a, b) => a.at - b.at,
+    arrival: (a, b) => (info.get(a).inWork ?? Infinity) - (info.get(b).inWork ?? Infinity) || a.at - b.at,
+    walk: (a, b) => direction * (info.get(a).total - info.get(b).total) ||
+      stopOrder.compare(info.get(a).from, info.get(b).from) || a.at - b.at
+  }[listView.sort] ?? ((a, b) => a.at - b.at);
+  shown.sort(order);
+
+  for (const button of document.querySelectorAll('[data-list-sort]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.listSort === listView.sort));
+  }
+  const walkButton = document.querySelector('[data-list-sort="walk"]');
+  walkButton.textContent = listView.sort !== 'walk' ? 'Labb' : listView.most ? 'Mest labb ↓' : 'Minnst labb ↑';
+  for (const button of document.querySelectorAll('[data-list-group]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.listGroup === listView.group));
+  }
+
+  const container = byId('ferdalisti');
+  const focused = document.activeElement?.dataset.ride;
+  let focusTarget;
+  const items = [];
+  let previousStop;
+  for (const trip of shown) {
+    const {from, home, work, inWork} = info.get(trip);
+    const route = routes[trip.number];
+    const key = rideKey(trip);
+    const chosen = key === rideKey(boardRide);
+    if (from !== previousStop) {
+      const band = element('li', '', 'ferd-bordi');
+      band.append(element('span', from), element('span', home + ' mín. ganga', 'ferd-bordi-ganga'));
+      items.push(band);
+      previousStop = from;
+    }
+    const item = document.createElement('li');
+    const button = element('button', '', 'ferd' + (trip.number === '13' && listView.group !== 'beint' ? ' ferd-13' : ''));
+    button.type = 'button';
+    button.dataset.ride = key;
+    button.setAttribute('aria-pressed', String(chosen));
+    button.setAttribute('aria-label', 'Leið ' + trip.number + ' frá ' + from + ', brottför klukkan ' + formatTime(trip.at));
+    const minutes = Math.ceil((trip.at - now) / minute);
+    const departure = element('span', '', 'ferd-timi ferd-brott');
+    const departureTime = element('span', '');
+    showDeparture(departureTime, trip);
+    departure.append(departureTime, element('small', 'Brottför'));
+    const arrival = element('span', '', 'ferd-timi ferd-koma');
+    arrival.append(element('span', (trip.estimatedArrival ? '≈' : '') + formatTime(inWork)), element('small', work ? 'Í vinnu' : 'Koma'));
+    button.append(routeBadge(trip.number), element('span', minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
+      departure, arrival);
+    if (chosen) {
+      const details = element('span', '', 'ferd-nanar');
+      const leave = element('span', 'Út úr húsi');
+      leave.append(element('b', formatTime(trip.at - home * minute), 'ferd-nanar-timi'));
+      const end = element('span', work ? 'Ganga í vinnu' : 'Endastopp', 'ferd-nanar-endi');
+      end.append(element('b', work ? work + ' mín. frá ' + route.to.replace('\u00ad', '') : route.to.replace('\u00ad', '')));
+      details.append(leave, end);
+      button.append(details);
+    }
+    if (key === focused) focusTarget = button;
+    item.append(button);
+    items.push(item);
+  }
+  const offline = unavailable.has('13') && alternativeRoutes.every(number => unavailable.has(number));
+  const empty = element('li', offline ? 'Tímar frá Strætó liggja ekki fyrir.' : 'Engar ferðir í boði.', 'ferd-tomt');
+  container.replaceChildren(...(items.length ? items : [empty]));
+  focusTarget?.focus({preventScroll: true});
 }
 
 function updateCountdown(featured, now) {
@@ -555,38 +634,6 @@ function updateSavedCountdown(now) {
 }
 
 
-function renderPreview(next) {
-  const container = byId('alternatives');
-  const focused = document.activeElement?.dataset.ride;
-  let focusTarget;
-  const message = alternativeRoutes.some(number => unavailable.has(number))
-    ? 'Tímar frá Strætó liggja ekki fyrir.' : 'Engar ferðir í boði.';
-  const cards = next.map(trip => {
-    const card = element('button', '', 'preview');
-    const key = rideKey(trip);
-    card.type = 'button';
-    card.dataset.ride = key;
-    card.setAttribute('aria-pressed', String(key === selectedRide));
-    if (key === focused) focusTarget = card;
-    const times = element('span', '', 'preview-times');
-    const route = routes[trip.number];
-    const departure = element('span', '', 'preview-column');
-    const departureTime = element('span', '', 'preview-time');
-    showDeparture(departureTime, trip);
-    const mini = element('strong', '', 'plan-mini');
-    mini.dataset.planCountdown = trip.at;
-    departure.append(mini, element('span', 'Brottför', 'meta'), departureTime);
-    showDifference(departure, trip.difference);
-    const arrival = element('span', '', 'preview-column');
-    arrival.append(element('span', 'Koma', 'meta'), element('span', arrivalLabel(trip), 'preview-time'),
-      element('span', route.to, 'preview-destination'));
-    times.append(departure, arrival);
-    card.append(routeBadge(trip.number), element('span', route.sign, 'preview-headsign'), times);
-    return card;
-  });
-  container.replaceChildren(...(cards.length ? cards : [element('p', message)]));
-  focusTarget?.focus({preventScroll: true});
-}
 
 function rideKey(trip) {
   return trip ? trip.number + ':' + trip.key : null;
@@ -699,7 +746,7 @@ async function refresh() {
 }
 
 const renderBoard = mainPage ? renderPrimary : renderSelectionBoard;
-const rideLists = mainPage ? ['primary', 'alternatives'] : ['asvallagata-rides', 'alternatives', 'later-asvallagata-rides'];
+const rideLists = mainPage ? ['ferdalisti'] : ['asvallagata-rides', 'alternatives', 'later-asvallagata-rides'];
 for (const id of rideLists) {
   byId(id).addEventListener('click', event => {
     const button = event.target.closest('[data-ride]') ?? event.target.closest('tr')?.querySelector('[data-ride]');
@@ -757,14 +804,24 @@ if (mainPage) {
   byId('next-ride').addEventListener('click', () => {
     selectedRide = null;
     renderBoard(Date.now());
-    byId('primary').querySelector('button')?.focus({preventScroll: true});
+    byId('ferdalisti').querySelector('button')?.focus({preventScroll: true});
   });
-  ['hi-prev', 'hi-next'].forEach((id, step) => byId(id).addEventListener('click', () => {
-    const trip = universitySteps[step];
-    if (!trip) return;
-    selectedRide = rideKey(trip);
+  document.querySelector('.ferdir-tools').addEventListener('click', event => {
+    const sort = event.target.closest('[data-list-sort]');
+    const group = event.target.closest('[data-list-group]');
+    if (!sort && !group) return;
+    if (sort) {
+      listView.most = sort.dataset.listSort === 'walk' && listView.sort === 'walk' ? !listView.most : false;
+      listView.sort = sort.dataset.listSort;
+    }
+    if (group) listView.group = listView.group === group.dataset.listGroup ? '' : group.dataset.listGroup;
+    try {
+      localStorage.setItem(listKey, JSON.stringify(listView));
+    } catch {
+      // Röðunin gildir í þessum flipa þótt ekki sé hægt að vista hana.
+    }
     renderBoard(Date.now());
-  }));
+  });
 }
 setInterval(() => {
   if (document.hidden) return;

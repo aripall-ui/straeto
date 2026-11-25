@@ -15,7 +15,7 @@ Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
 ## Uppbygging
 
 - `dist/`: allur vefurinn, birtur eins og hann er. Engin byggingarskref, enginn npm. Hreint HTML, CSS og JS.
-  - `index.html` + `app.js`: forsíða með lifandi brottförum, Mínum ferðum og lokum þjónustu.
+  - `index.html` + `app.js`: forsíða með lifandi brottförum, Mínum ferðum og lokum þjónustu. Ferðalistinn (röðun, leiðaval, stoppaborðar) er í `renderTripList()` og `ferdalisti.css`.
   - `a-hradferd/`: samanburður leiðar 13 við HÍ-leiðir.
   - `undirbua-morguninn/planner.js`: skipulagsform fyrir morgundaginn.
   - `morning-plan.js`: sameiginlegir útreikningar og vistun plana (`localStorage`).

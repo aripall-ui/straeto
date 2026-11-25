@@ -18,13 +18,14 @@
 <link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
 <link rel="stylesheet" href="morgundagur.css?v=1">
 <link rel="stylesheet" href="naerkort.css?v=3">
+<link rel="stylesheet" href="ferdalisti.css?v=1">
 <link rel="stylesheet" href="commute-weather.css?v=halka">
 <script src="commute-status.js?v=timing-label" defer></script>
-<script src="morning-plan.js?v=morgundagur" defer></script>
+<script src="morning-plan.js?v=ferdalisti" defer></script>
 <script src="morgundagur.js?v=1" defer></script>
 <script src="commute-weather.js?v=mm" defer></script>
 <script src="naerkort.js?v=1" defer></script>
-<script src="app.js?v=orvar-a" defer></script>
+<script src="app.js?v=ferdalisti" defer></script>
 </head>
 <body data-view="main">
 <main>
@@ -80,23 +81,27 @@
 <header class="board-header"><span id="main-route" class="route route-13">13</span><h2 id="stop">Ásvallagata → Sléttuvegur</h2><button id="kort-takki" class="kort-takki" type="button" aria-expanded="false" aria-controls="naerkort" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3" fill="currentColor"/></svg>Kort</button></header>
 <div class="hero">
 <div><span class="label" id="ride-label" role="status">Næsti vagn</span><div class="countdown" id="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><div id="countdown-timing"></div><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta vagn</button></div>
-<dl><div><dt>Brottför</dt><dd id="departure">—</dd><div id="hi-stepper" class="stepper" role="group" aria-label="Aðrar ferðir frá HÍ" hidden><button id="hi-prev" type="button" aria-label="Fyrri ferð"><span aria-hidden="true">←</span></button><span id="hi-time" class="stepper-label stepper-time"></span><button id="hi-next" type="button" aria-label="Næsta ferð"><span aria-hidden="true">→</span></button></div></div><div><dt id="arrival-label">Koma á RÚV</dt><dd id="arrival">—</dd></div></dl>
+<dl><div><dt>Brottför</dt><dd id="departure">—</dd></div><div><dt id="arrival-label">Koma á RÚV</dt><dd id="arrival">—</dd></div></dl>
 </div>
 <figure id="naerkort" class="naerkort" hidden><figcaption id="naerkort-texti"></figcaption></figure>
-<table class="station" aria-label="Seinni ferðir á leið 13">
-<thead><tr><th scope="col">Ferðir frá Ásvallagötu</th><th scope="col">Brottför</th><th scope="col">Koma á RÚV</th></tr></thead>
-<tbody id="primary"><tr><td colspan="3">Sæki tíma…</td></tr></tbody>
-</table>
+<div class="ferdir-tools">
+<div class="ferdir-rodun" role="group" aria-label="Raða eftir">
+<button type="button" data-list-sort="departure" aria-pressed="true">Brottför</button>
+<button type="button" data-list-sort="arrival" aria-pressed="false">Komu</button>
+<button type="button" data-list-sort="walk" aria-pressed="false">Labb</button>
+</div>
+<div class="ferdir-leidir" role="group" aria-label="Sýna leiðir">
+<button type="button" class="ferdir-beint" data-list-group="beint" aria-pressed="false"><span class="route route-13">13</span>Beint</button>
+<button type="button" data-list-group="annad" aria-pressed="false"><span class="ferdir-litil"><span class="route route-1">1</span><span class="route route-3">3</span><span class="route route-6">6</span></span>Annað</button>
+</div>
+</div>
+<ul id="ferdalisti" class="ferdalisti" aria-label="Ferðir"></ul>
 </section>
 <a id="morgun-kort" class="morgun-kort" href="undirbua-morguninn/" hidden>
 <span class="morgun-kort-takn"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg></span>
 <span class="morgun-kort-texti"><b id="morgun-kort-titill">Ekkert plan fyrir morgundaginn</b><span>Undirbúa morguninn</span></span>
 <span class="morgun-kort-or" aria-hidden="true">→</span>
 </a>
-<section id="alternatives-board" class="teaser" aria-labelledby="teaser-heading" hidden>
-<div class="teaser-header"><h2 id="teaser-heading">Á hraðferð?</h2><a id="all-rides" href="a-hradferd/">Sjá allar ferðir</a></div>
-<div id="alternatives" class="teaser-grid"><p>Sæki tíma…</p></div>
-</section>
 <a id="morgun-flis" class="morgun-flis" href="undirbua-morguninn/" hidden><span class="visually-hidden">Breyta plani: </span><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5v3M4.9 9.9l2.1 2.1M19.1 9.9 17 12"/><path d="M8 21h8"/></g></svg><span id="morgun-flis-dagur">Á morgun</span> <b id="morgun-flis-timi"></b><span class="morgun-flis-breyta" aria-hidden="true">›</span></a>
 </main>
 </body>

@@ -1,0 +1,35 @@
+/* Ferðalisti forsíðu: röðun, leiðaval, stoppaborðar og raðir sem opnast þegar ýtt er á þær. */
+.ferdir-tools { display:flex; flex-direction:column; gap:10px; padding:12px clamp(12px,4vw,24px); border-top:1px solid var(--line); }
+.ferdir-rodun { display:flex; padding:3px; border:1px solid var(--line); border-radius:999px; background:var(--inset); }
+.ferdir-rodun button { flex:1; min-height:40px; padding:0 8px; border:0; border-radius:999px; background:transparent; color:var(--muted); font:inherit; font-size:.95rem; font-weight:700; white-space:nowrap; cursor:pointer; }
+.ferdir-rodun button[aria-pressed=true] { background:var(--paper); color:var(--ink); box-shadow:0 1px 3px rgb(0 0 0 / .14); }
+.ferdir-leidir { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.ferdir-leidir button { display:flex; align-items:center; justify-content:center; gap:7px; min-width:0; min-height:46px; padding:4px 8px; border:2px solid var(--line); border-radius:14px; background:var(--paper); color:var(--muted); font:inherit; font-size:.95rem; font-weight:750; cursor:pointer; }
+.ferdir-leidir button[aria-pressed=true] { color:var(--ink); border-color:var(--signal); background:var(--inset); }
+.ferdir-leidir .ferdir-beint[aria-pressed=true] { border-color:#3fb9bf; background:rgb(141 224 228 / .22); }
+.ferdir-litil { display:inline-flex; gap:2px; }
+.ferdir-litil .route { min-width:1.55rem; padding:2px 3px; font-size:.78rem; border-radius:4px; }
+.ferdalisti { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
+.ferd-bordi { display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:7px clamp(12px,4vw,24px); background:var(--inset); color:var(--ink); font-size:.8rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+.ferd-bordi-ganga { color:var(--muted); font-weight:600; letter-spacing:0; text-transform:none; white-space:nowrap; }
+.ferd { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; grid-template-areas:'leid bid brott koma' 'nanar nanar nanar nanar'; align-items:center; gap:0 12px; width:100%; padding:12px clamp(12px,4vw,24px); border:0; border-top:1px solid var(--line); background:transparent; color:var(--ink); font:inherit; text-align:left; cursor:pointer; }
+.ferd-bordi + li .ferd { border-top:0; }
+.ferd:hover { background:var(--inset); }
+.ferd > .route { grid-area:leid; min-width:2.5rem; padding:6px 7px; font-size:1.05rem; }
+.ferd-13 { background:rgb(141 224 228 / .2); box-shadow:inset 5px 0 #8de0e4; }
+:root:not([data-theme=light]) .ferd-13 { background:rgb(141 224 228 / .1); }
+.ferd[aria-pressed=true] { background:var(--inset); box-shadow:inset 5px 0 var(--signal); }
+.ferd:focus-visible { outline:2px solid var(--signal); outline-offset:-2px; }
+.ferd-bid { grid-area:bid; font-size:1.05rem; font-weight:750; white-space:nowrap; }
+.ferd-timi { font:750 1.2rem var(--mono); font-variant-numeric:tabular-nums; text-align:right; }
+.ferd-brott { grid-area:brott; }
+.ferd-koma { grid-area:koma; }
+.ferd-timi small { display:none; font:600 .75rem system-ui,sans-serif; color:var(--muted); }
+.ferd-bordi + li .ferd-timi small, .ferd[aria-pressed=true] .ferd-timi small { display:block; }
+.ferd-timi .departure-times { display:inline-flex; gap:5px; align-items:baseline; }
+.ferd-timi del { font-size:.75em; color:var(--muted); }
+.ferd-nanar { grid-area:nanar; display:grid; grid-template-columns:auto auto; justify-content:space-between; gap:12px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); color:var(--muted); font-size:.9rem; }
+.ferd-nanar b { display:block; color:var(--ink); font-size:1rem; font-weight:750; }
+.ferd-nanar-timi { font-family:var(--mono); }
+.ferd-nanar-endi { text-align:right; }
+.ferd-tomt { padding:14px clamp(12px,4vw,24px); color:var(--muted); }
