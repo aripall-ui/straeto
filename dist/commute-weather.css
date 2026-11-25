@@ -4,7 +4,7 @@
   --weather-glow:#457897;
   --weather-sky:#274969;
   --weather-base:#172c49;
-  padding:14px clamp(12px,4vw,24px) 10px;
+  padding:10px clamp(12px,4vw,20px);
   margin:0 0 12px;
   color:var(--weather-ink);
   background:radial-gradient(ellipse at 88% -20%, var(--weather-glow), transparent 66%),
@@ -15,10 +15,25 @@
 .commute-weather[data-sky=rain] { --weather-glow:#426b7d; --weather-sky:#244255; --weather-base:#192c43; }
 .commute-weather[data-sky=fog], .commute-weather[data-sky=snow] { --weather-glow:#54758e; --weather-sky:#344b68; }
 .commute-weather[hidden], .commute-weather [hidden] { display:none; }
-.commute-weather-header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:2px 12px; }
-.commute-weather h2 { margin:0; font-size:1rem; }
+.commute-weather-header { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; }
+.commute-weather h2 { margin:0; font-size:.875rem; }
+.commute-weather .commute-weather-header p { font-size:.8rem; }
 .commute-weather p, .commute-weather dt { color:var(--weather-muted); font-size:.875rem; }
-.weather-overview { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; align-items:center; margin:12px 0 16px; }
+.weather-summary {
+  display:flex; align-items:center; gap:10px; width:100%; min-height:44px; margin-top:6px; padding:4px 0;
+  border:0; background:transparent; color:var(--weather-ink); font:inherit; text-align:left; cursor:pointer;
+}
+.weather-summary:focus-visible { outline:2px solid var(--weather-ink); outline-offset:3px; border-radius:6px; }
+.weather-summary-temperature { font:650 1.75rem/1 system-ui,sans-serif; letter-spacing:-.05em; font-variant-numeric:tabular-nums; }
+.weather-summary-text { display:flex; flex-direction:column; min-width:0; gap:1px; font-weight:700; line-height:1.25; }
+.weather-summary-line { color:var(--weather-muted); font-size:.85rem; font-weight:600; font-variant-numeric:tabular-nums; }
+.weather-summary-more { display:flex; align-items:center; gap:6px; margin-inline-start:auto; color:var(--weather-muted); font-size:.8rem; font-weight:650; }
+.weather-chevron { width:8px; height:8px; border:solid currentColor; border-width:0 2px 2px 0; transform:translateY(-2px) rotate(45deg); transition:transform .2s; }
+.weather-summary[aria-expanded=true] .weather-chevron { transform:translateY(2px) rotate(-135deg); }
+.weather-summary[aria-expanded=true] .weather-summary-label { display:none; }
+.commute-weather.is-open .weather-summary-temperature, .commute-weather.is-open .weather-summary-line { display:none; }
+.weather-summary:hover .weather-summary-more { color:var(--weather-ink); }
+.weather-overview { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; align-items:center; margin:8px 0 14px; }
 .weather-thermal { display:flex; flex-wrap:wrap; align-items:center; gap:8px clamp(12px,3vw,24px); }
 .commute-weather dl { text-align:left; }
 .commute-weather dd { color:var(--weather-ink); font-weight:750; font-variant-numeric:tabular-nums; }
@@ -26,8 +41,8 @@
 .weather-reading dd { font:600 clamp(2.2rem,7.5vw,4.25rem)/1.05 system-ui,sans-serif; letter-spacing:-.07em; }
 .weather-feels { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 6px; }
 .weather-feels dd { margin:0; font-size:.9rem; }
-.commute-weather .weather-condition { display:flex; align-items:center; justify-content:flex-end; gap:7px; margin-inline-start:auto; color:var(--weather-ink); font-weight:700; }
-#commute-weather-icon { font:400 clamp(1.4rem,5vw,2.5rem)/1 system-ui,sans-serif; }
+#commute-weather-icon { font:400 1.6rem/1 system-ui,sans-serif; }
+#commute-weather-icon:empty { display:none; }
 .commute-weather[data-sky=sun] #commute-weather-icon { color:#ffdd8d; }
 .weather-range {
   grid-template-columns:repeat(2,auto);
@@ -42,6 +57,6 @@
   padding:10px clamp(8px,3vw,14px); border-radius:10px; background:rgb(10 25 44 / .34);
 }
 .weather-details dd { font-size:clamp(.875rem,3.8vw,1.15rem); }
-.commute-weather-source { text-align:right; margin-top:6px; }
+.commute-weather .commute-weather-source { margin:0 0 0 auto; }
 .commute-weather-source a { color:var(--weather-muted); font-size:.75rem; }
-.commute-weather .commute-ice { margin-top:8px; color:#ffd6b0; font-weight:700; }
+.commute-weather .commute-ice { margin-top:6px; color:#ffd6b0; font-weight:700; }

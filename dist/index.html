@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="style.css?v=afstaedar-slodir">
 <link rel="stylesheet" href="commute-status.css?v=footer">
 <link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
-<link rel="stylesheet" href="commute-weather.css?v=temperatures">
+<link rel="stylesheet" href="commute-weather.css?v=compact">
 <script src="commute-status.js?v=timing-label" defer></script>
 <script src="morning-plan.js?v=trip-details" defer></script>
-<script src="commute-weather.js?v=sky" defer></script>
+<script src="commute-weather.js?v=compact" defer></script>
 <script src="app.js?v=afstaedar-slodir" defer></script>
 </head>
 <body data-view="main">
@@ -58,7 +58,14 @@
 <header class="commute-weather-header">
 <h2 id="commute-weather-title">Veðurspá</h2>
 <p id="commute-weather-period"></p>
+<p class="commute-weather-source"><a href="https://open-meteo.com/">Open-Meteo</a></p>
 </header>
+<button id="commute-weather-toggle" class="weather-summary" type="button" aria-expanded="false" aria-controls="commute-weather-values" hidden>
+<span id="commute-weather-icon" aria-hidden="true"></span>
+<span id="commute-summary-temperature" class="weather-summary-temperature">—</span>
+<span class="weather-summary-text"><span id="commute-weather-condition"></span><span id="commute-summary-line" class="weather-summary-line"></span></span>
+<span class="weather-summary-more"><span class="weather-summary-label">Nánar</span><span class="weather-chevron" aria-hidden="true"></span></span>
+</button>
 <div id="commute-weather-values" hidden>
 <div class="weather-overview">
 <div class="weather-thermal">
@@ -71,7 +78,6 @@
 <div><dt>Hæst</dt><dd id="commute-high">—</dd></div>
 </dl>
 </div>
-<p class="weather-condition"><span id="commute-weather-icon" aria-hidden="true"></span><span id="commute-weather-condition"></span></p>
 </div>
 <dl class="weather-details">
 <div><dt>Vindur</dt><dd id="commute-wind">—</dd></div>
@@ -81,7 +87,6 @@
 </div>
 <p id="commute-ice" class="commute-ice" hidden></p>
 <p id="commute-weather-status" role="status">Sæki veðurspá…</p>
-<p class="commute-weather-source"><a href="https://open-meteo.com/">Open-Meteo</a></p>
 </section>
 </div>
 <section id="departures-board" class="board" aria-labelledby="stop" hidden>

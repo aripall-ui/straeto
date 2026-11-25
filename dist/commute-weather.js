@@ -26,6 +26,12 @@ const commuteWeather = (() => {
   const precipitation = document.getElementById('commute-precipitation');
   const status = document.getElementById('commute-weather-status');
   const ice = document.getElementById('commute-ice');
+  const toggle = document.getElementById('commute-weather-toggle');
+  const summaryTemperature = document.getElementById('commute-summary-temperature');
+  const summaryLine = document.getElementById('commute-summary-line');
+  const openKey = 'i-vinnuna-weather-open';
+  let open = false;
+  try { open = localStorage.getItem(openKey) === '1'; } catch {}
   const decimal = new Intl.NumberFormat('is-IS', {maximumFractionDigits: 1});
   let view;
   let forecast;
@@ -79,7 +85,10 @@ const commuteWeather = (() => {
     const startIndex = forecast?.time.indexOf(startKey) ?? -1;
     const endIndex = forecast?.time.indexOf(endKey) ?? -1;
     const available = startIndex >= 0 && endIndex >= 0 && Date.now() - updated <= 90 * 60000;
-    values.hidden = !available;
+    toggle.hidden = !available;
+    toggle.setAttribute('aria-expanded', String(open));
+    card.classList.toggle('is-open', available && open);
+    values.hidden = !available || !open;
     status.hidden = available;
     ice.hidden = true;
     if (!available) {
@@ -93,6 +102,7 @@ const commuteWeather = (() => {
     icon.textContent = symbol;
     condition.textContent = description;
     temperature.textContent = value(forecast.temperature_2m?.[startIndex], ' °C');
+    summaryTemperature.textContent = value(forecast.temperature_2m?.[startIndex], '°');
     feels.textContent = value(forecast.apparent_temperature?.[startIndex], ' °C');
     low.textContent = value(dailyForecast?.temperature_2m_min?.[dateIndex], ' °C');
     high.textContent = value(dailyForecast?.temperature_2m_max?.[dateIndex], ' °C');
@@ -102,10 +112,18 @@ const commuteWeather = (() => {
     const amount = forecast.precipitation?.[endIndex];
     precipitation.textContent = [Number.isFinite(chance) ? value(chance, '% líkur') : '',
       Number.isFinite(amount) ? value(amount, ' mm', 1) : ''].filter(Boolean).join(' · ') || '—';
+    summaryLine.textContent = [value(forecast.wind_speed_10m?.[startIndex], ' m/s'),
+      Number.isFinite(chance) ? value(chance, '% úrkoma') : ''].filter(Boolean).join(' · ');
     const hint = iceHint(startIndex, endIndex);
     ice.textContent = hint;
     ice.hidden = !hint;
   }
+
+  toggle.addEventListener('click', () => {
+    open = !open;
+    try { localStorage.setItem(openKey, open ? '1' : '0'); } catch {}
+    paint();
+  });
 
   async function refresh() {
     attempt = Date.now();
