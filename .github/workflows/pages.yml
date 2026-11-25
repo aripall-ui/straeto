@@ -12,14 +12,13 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  # Pakkað og birt í sitthvoru verki, eins og í sniðmáti GitHub. Þegar bæði skrefin
+  # voru í sama verki fann deploy-pages stundum ekki nýupphlaðna pakkann.
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Athuga JavaScript
@@ -28,5 +27,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
