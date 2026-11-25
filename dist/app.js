@@ -523,13 +523,13 @@ function renderPrimary(now) {
     byId('stop').textContent = origin + ' → ' + routes[number].sign;
   }
   byId('ride-label').textContent = chosen ? 'Valin ferð' : 'Næsti vagn';
-  byId('next-ride').hidden = !chosen;
   // Frá HÍ (1 og 3 frá HÍ B, 6 frá HÍ C): örvar fram og aftur milli ferða þaðan í tímaröð.
   const fromUniversity = boardRide && boardRide.number !== '13';
   const universityRides = university.flat().sort((a, b) => a.at - b.at || rideKey(a).localeCompare(rideKey(b)));
   const position = universityRides.findIndex(trip => rideKey(trip) === selectedRide);
   universitySteps = fromUniversity ? [universityRides[position - 1], universityRides[position + 1]] : [];
   byId('hi-stepper').hidden = !fromUniversity;
+  byId('next-ride').hidden = !chosen || fromUniversity;
   byId('hi-prev').disabled = !universitySteps[0];
   byId('hi-next').disabled = !universitySteps[1];
   byId('all-rides').href = chosen ? appRoot + 'a-hradferd/?' + new URLSearchParams({ferd: selectedRide}) : appRoot + 'a-hradferd/';
