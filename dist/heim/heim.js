@@ -51,6 +51,7 @@ const homeWalk = {
   'Ráðhúsið': ['Ráðhúsinu', 15], 'MR': ['MR', 19]
 };
 const listKey = 'heim-ferdalisti';
+let queue;
 const listView = {sort: 'departure', most: false, group: ''};
 try {
   const saved = JSON.parse(localStorage.getItem(listKey));
@@ -296,10 +297,14 @@ function renderTripList(rides, now) {
     const leave = leaveAt(ride);
     nextExpiry = Math.min(nextExpiry, (leave >= now ? leave : leave + minute) + 1);
   }
-  const soon = upcomingRides.filter(ride => ride.at <= now + 60 * minute);
-  let shown = soon.length >= 4 ? soon : upcomingRides.slice(0, 4);
+  // Ferðir í biðröð fara efst, óháð leiðavali og klukkustundarglugga.
+  queue?.prune(now);
+  const queued = upcomingRides.filter(ride => queue?.has(ride.key));
+  const rest = upcomingRides.filter(ride => !queued.includes(ride));
+  const soon = rest.filter(ride => ride.at <= now + 60 * minute);
+  let shown = soon.length >= 4 ? soon : rest.slice(0, 4);
   if (listView.group) shown = shown.filter(ride => (ride.connection.key === 'direct') === (listView.group === 'beint'));
-  const info = new Map(shown.map(ride => [ride, walksFor(ride)]));
+  const info = new Map([...queued, ...shown].map(ride => [ride, walksFor(ride)]));
   const direction = listView.most ? -1 : 1;
   const order = {
     departure: (a, b) => a.at - b.at,
@@ -320,10 +325,10 @@ function renderTripList(rides, now) {
 
   const items = [];
   let previousStop;
-  for (const ride of shown) {
+  const addRow = (ride, inQueue) => {
     const {from, work, home, exitName, atHome} = info.get(ride);
     const chosen = ride.key === featured?.key;
-    if (from !== previousStop) {
+    if (!inQueue && from !== previousStop) {
       const band = element('li', '', 'ferd-bordi');
       band.append(element('span', from), element('span', work + ' mín. ganga', 'ferd-bordi-ganga'));
       items.push(band);
@@ -338,8 +343,9 @@ function renderTripList(rides, now) {
     departure.append(element('span', timestring(ride.at)), element('small', 'Brottför'));
     const arrival = element('span', '', 'ferd-timi ferd-koma');
     arrival.append(element('span', timestring(atHome)), element('small', 'Heima'));
-    button.append(routesFor(ride.connection), element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
-      departure, arrival);
+    const wait = element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid');
+    if (inQueue) wait.append(element('small', from, 'ferd-stopp'));
+    button.append(routesFor(ride.connection), wait, departure, arrival);
     if (chosen) {
       const details = element('span', '', 'ferd-nanar');
       const leave = element('span', 'Út úr vinnu');
@@ -351,8 +357,16 @@ function renderTripList(rides, now) {
       button.append(details);
     }
     item.append(button);
+    bidrod.decorate(item, button, ride.key, ride.at, inQueue, chosen);
     items.push(item);
+  };
+  if (queued.length) {
+    const band = element('li', '', 'ferd-bordi ferd-bordi-bidrod');
+    band.append(element('span', 'Í biðröð'), element('span', queued.length + (queued.length === 1 ? ' ferð' : ' ferðir'), 'ferd-bordi-ganga'));
+    items.push(band);
+    queued.forEach(ride => addRow(ride, true));
   }
+  shown.forEach(ride => addRow(ride, false));
   const empty = element('li', predictions ? 'Engar ferðir í boði.' : 'Næ ekki sambandi við Strætó.', 'ferd-tomt');
   byId('ferdalisti').replaceChildren(...(items.length ? items : [empty]));
 }
@@ -416,6 +430,7 @@ walkButtons.forEach(button => {
 });
 
 byId('refresh').addEventListener('click', refresh);
+if (main) queue = bidrod.create({storageKey: 'heim-bidrod', list: byId('ferdalisti'), onChange: () => render(Date.now())});
 document.querySelector('.ferdir-tools')?.addEventListener('click', event => {
   const sort = event.target.closest('[data-list-sort]');
   const group = event.target.closest('[data-list-group]');

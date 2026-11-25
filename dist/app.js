@@ -40,6 +40,7 @@ const stopOrder = new Intl.Collator('is-IS');
 const stepCountFormat = new Intl.NumberFormat('is-IS');
 const walkingStepsPerMinute = 100;
 let tripSort = 'departure';
+let queue;
 // Ferðalisti forsíðu: röðun (departure, arrival, walk), mest/minnst labb og leiðaval (beint, annad).
 const listKey = 'i-vinnuna-ferdalisti';
 const listView = {sort: 'departure', most: false, group: ''};
@@ -552,10 +553,14 @@ function renderTripList(rides, now) {
     const leave = leaveAt(trip);
     nextBoardChange = Math.min(nextBoardChange, (leave >= now ? leave : leave + minute) + 1);
   }
-  const soon = upcomingRides.filter(trip => trip.at <= now + 60 * minute);
-  let shown = soon.length >= 4 ? soon : upcomingRides.slice(0, 4);
+  // Ferðir í biðröð fara efst, óháð leiðavali og klukkustundarglugga.
+  queue?.prune(now);
+  const queued = upcomingRides.filter(trip => queue?.has(rideKey(trip)));
+  const rest = upcomingRides.filter(trip => !queued.includes(trip));
+  const soon = rest.filter(trip => trip.at <= now + 60 * minute);
+  let shown = soon.length >= 4 ? soon : rest.slice(0, 4);
   if (listView.group) shown = shown.filter(trip => (trip.number === '13') === (listView.group === 'beint'));
-  const info = new Map(shown.map(trip => [trip, walksFor(trip)]));
+  const info = new Map([...queued, ...shown].map(trip => [trip, walksFor(trip)]));
   const direction = listView.most ? -1 : 1;
   const order = {
     departure: (a, b) => a.at - b.at,
@@ -579,12 +584,12 @@ function renderTripList(rides, now) {
   let focusTarget;
   const items = [];
   let previousStop;
-  for (const trip of shown) {
+  const addRow = (trip, inQueue) => {
     const {from, home, work, inWork} = info.get(trip);
     const route = routes[trip.number];
     const key = rideKey(trip);
     const chosen = key === rideKey(boardRide);
-    if (from !== previousStop) {
+    if (!inQueue && from !== previousStop) {
       const band = element('li', '', 'ferd-bordi');
       band.append(element('span', from), element('span', home + ' mín. ganga', 'ferd-bordi-ganga'));
       items.push(band);
@@ -605,8 +610,9 @@ function renderTripList(rides, now) {
     departure.append(departureTime, element('small', 'Brottför'));
     const arrival = element('span', '', 'ferd-timi ferd-koma');
     arrival.append(element('span', (trip.estimatedArrival ? '≈' : '') + formatTime(inWork)), element('small', work ? 'Í vinnu' : 'Koma'));
-    button.append(routeBadge(trip.number), element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
-      departure, arrival);
+    const wait = element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid');
+    if (inQueue) wait.append(element('small', from, 'ferd-stopp'));
+    button.append(routeBadge(trip.number), wait, departure, arrival);
     if (chosen) {
       const details = element('span', '', 'ferd-nanar');
       const leave = element('span', 'Út úr húsi');
@@ -618,8 +624,16 @@ function renderTripList(rides, now) {
     }
     if (key === focused) focusTarget = button;
     item.append(button);
+    bidrod.decorate(item, button, key, trip.at, inQueue, chosen);
     items.push(item);
+  };
+  if (queued.length) {
+    const band = element('li', '', 'ferd-bordi ferd-bordi-bidrod');
+    band.append(element('span', 'Í biðröð'), element('span', queued.length + (queued.length === 1 ? ' ferð' : ' ferðir'), 'ferd-bordi-ganga'));
+    items.push(band);
+    queued.forEach(trip => addRow(trip, true));
   }
+  shown.forEach(trip => addRow(trip, false));
   const offline = unavailable.has('13') && alternativeRoutes.every(number => unavailable.has(number));
   const empty = element('li', offline ? 'Tímar frá Strætó liggja ekki fyrir.' : 'Engar ferðir í boði.', 'ferd-tomt');
   container.replaceChildren(...(items.length ? items : [empty]));
@@ -814,6 +828,7 @@ if (mainPage) {
     renderBoard(Date.now());
     byId('ferdalisti').querySelector('button')?.focus({preventScroll: true});
   });
+  queue = bidrod.create({storageKey: 'i-vinnuna-bidrod', list: byId('ferdalisti'), onChange: () => renderBoard(Date.now())});
   document.querySelector('.ferdir-tools').addEventListener('click', event => {
     const sort = event.target.closest('[data-list-sort]');
     const group = event.target.closest('[data-list-group]');

@@ -12,13 +12,12 @@
 .ferdalisti { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
 .ferd-bordi { display:flex; justify-content:space-between; align-items:baseline; gap:8px; padding:7px clamp(12px,4vw,24px); background:var(--inset); color:var(--ink); font-size:.8rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
 .ferd-bordi-ganga { color:var(--muted); font-weight:600; letter-spacing:0; text-transform:none; white-space:nowrap; }
-.ferd { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; grid-template-areas:'leid bid brott koma' 'nanar nanar nanar nanar'; align-items:center; gap:0 12px; width:100%; padding:12px clamp(12px,4vw,24px); border:0; border-top:1px solid var(--line); background:transparent; color:var(--ink); font:inherit; text-align:left; cursor:pointer; }
+.ferd { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; grid-template-areas:'leid bid brott koma' 'nanar nanar nanar nanar'; align-items:center; gap:0 12px; width:100%; padding:12px clamp(12px,4vw,24px); border:0; border-top:1px solid var(--line); color:var(--ink); font:inherit; text-align:left; cursor:pointer; }
 .ferd-bordi + li .ferd { border-top:0; }
-.ferd:hover { background:var(--inset); }
+.ferd:hover { background-color:var(--inset); }
 .ferd > .route { grid-area:leid; min-width:2.5rem; padding:6px 7px; font-size:1.05rem; }
-.ferd-13 { background:rgb(141 224 228 / .2); box-shadow:inset 5px 0 #8de0e4; }
-:root:not([data-theme=light]) .ferd-13 { background:rgb(141 224 228 / .1); }
-.ferd[aria-pressed=true] { background:var(--inset); box-shadow:inset 5px 0 var(--signal); }
+.ferd-13 { box-shadow:inset 5px 0 #8de0e4; }
+.ferd[aria-pressed=true] { box-shadow:inset 5px 0 var(--signal); }
 .ferd:focus-visible { outline:2px solid var(--signal); outline-offset:-2px; }
 .ferd-bid { grid-area:bid; font-size:1.05rem; font-weight:750; white-space:nowrap; }
 .ferd-timi { font:750 1.2rem var(--mono); font-variant-numeric:tabular-nums; text-align:right; }
@@ -38,3 +37,17 @@
 .ferd-nanar-skipti { grid-column:1 / -1; color:var(--ink); }
 .ferd-sein > :not(.ferd-bid):not(.ferd-nanar) { opacity:.45; }
 .ferd-sein .ferd-bid { color:var(--late); font-size:.95rem; }
+/* Biðröð: stroka til vinstri sýnir „Í biðröð“ fyrir aftan röðina. */
+.ferdalisti > li { position:relative; }
+.ferdalisti > li[data-strok]::after { content:attr(data-strok); position:absolute; inset:0 0 0 auto; z-index:0; display:flex; align-items:center; justify-content:flex-end; width:100%; padding-right:clamp(12px,4vw,24px); background:var(--inset); color:var(--muted); font-weight:800; opacity:0; pointer-events:none; }
+.ferdalisti > li.ferd-strok::after { opacity:1; }
+.ferdalisti > li.ferd-strok-nog::after { background:#2f9e5b; color:#fff; }
+.ferd { position:relative; z-index:1; touch-action:pan-y; background-color:var(--paper); }
+.ferd-13 { background-color:var(--paper); background-image:linear-gradient(rgb(141 224 228 / .2), rgb(141 224 228 / .2)); }
+:root:not([data-theme=light]) .ferd-13 { background-image:linear-gradient(rgb(141 224 228 / .1), rgb(141 224 228 / .1)); }
+.ferd[aria-pressed=true] { background-color:var(--inset); background-image:none; }
+.ferd-bordi-bidrod { background:#2f9e5b; color:#fff; }
+.ferd-bordi-bidrod .ferd-bordi-ganga { color:#e6f7ec; }
+.ferd-stopp { display:block; color:var(--muted); font-size:.78rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:9rem; }
+.ferd-bidrod-takki { display:block; width:calc(100% - 2 * clamp(12px,4vw,24px)); margin:0 auto 12px; min-height:40px; border:1px dashed var(--signal); border-radius:10px; background:transparent; color:var(--signal); font:inherit; font-size:.92rem; font-weight:700; cursor:pointer; position:relative; z-index:1; }
+.ferdalisti > li:has(.ferd[aria-pressed=true]) { background:var(--inset); }
