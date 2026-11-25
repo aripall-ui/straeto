@@ -109,7 +109,8 @@ const commuteWeather = (() => {
     const amount = forecast.precipitation?.[endIndex];
     precipitation.textContent = [Number.isFinite(chance) ? value(chance, '%') : '',
       Number.isFinite(amount) ? value(amount, ' mm', 1) : ''].filter(Boolean).join(' · ') || '—';
-    summaryLine.textContent = '· ' + value(forecast.wind_speed_10m?.[startIndex], ' m/s');
+    summaryLine.textContent = ['', value(forecast.wind_speed_10m?.[startIndex], ' m/s'),
+      Number.isFinite(amount) && amount >= 0.1 ? value(amount, ' mm', 1) : ''].filter((part, i) => !i || part).join(' · ');
     const hint = iceHint(startIndex, endIndex);
     ice.textContent = hint;
     ice.hidden = !hint;
