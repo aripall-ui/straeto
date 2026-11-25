@@ -169,6 +169,13 @@ Atriðin hér eru staðfest í kóða eða gögnum, eða merkt sem háð ytri a�
 4. **Sameiginlegur bakendi og samstilling.** Sameiginleg sókn og skyndiminni fyrir áætlun og rauntíma, aldursmerkingar, útrunnin gögn, villuvöktun og gagnagrunnur fyrir plön hvers notanda. Almennur lestur og leit gæti verið án innskráningar, innskráning fyrir samstillingu. Sites Worker og D1 voru rædd sem möguleikar, án endanlegrar innleiðingar eða ákvörðunar um framtíðarhýsingu.
 5. **Almenn ferðaleit og kort.** Höfuðborgarsvæðið fyrst. Nálæg stopp, akstursleið og síðan raunveruleg vagnastaðsetning ef viðeigandi straumur fæst. Heimilisfangaleit, ganga og skiptingar, **fara núna** eða **mæta fyrir**, og tilkynningar um truflanir. OpenTripPlanner og MapLibre voru rædd til skoðunar. Í fyrstu almennu útgáfunni var ráðlagt að greiðslur færu áfram fram í Klapp. [OpenTripPlanner](https://docs.opentripplanner.org/en/latest/) · [MapLibre](https://maplibre.org/maplibre-gl-js/docs/) · [Klapp og greiðslur](https://www.straeto.is/en/user-information/ticketing-information)
 
+6. **„Í strætó“ (ósk 25. nóv.).** Nýtt svæði fyrir ferðina sjálfa, eftir að komið er um borð.
+   - **Í hvaða strætó ertu?** Gluggi til að finna vagninn sem maður situr í, t.d. út frá næsta vagni við stoppið sem maður fór frá, leiðarnúmeri eða staðsetningu.
+   - **Ferðin:** leiðin á korti með rauntímastaðsetningu vagnsins (byggir á nándarkortinu, `naerkort.js` / `kort.json`), og **framvindustika með stoppunum** þar sem sést hvenær vagninn kemur á hvert stopp og hvar hann er núna.
+   - **Skiptimiði:** lítill gluggi fyrir neðan þar sem hægt er að fylgjast með öðrum strætó, t.d. vagninum sem skipt er í (sbr. 18 → 13 á Skeggjagötu).
+   - **Útlit í stíl við gamaldags skiptimiða** úr kassa vagnsins: hvítur, krumpaður hitapappír, jafnbreitt prentletur, haus í hástöfum, dagsetning og tími (`20/12/2024 09:23`), stórt **Gildir til: 10:38** (75 mín. eftir útgáfu) og vefslóð neðst. Sækja innblástur í útlitið en ekki afrita merki eða vörumerki Strætó.
+   - **Gögn:** `BusLocationByStop` skilar `lat`, `lng`, `busId` og `trip{id}` fyrir hverja komu á stopp. Komutími á hvert stopp krefst fyrirspurnar fyrir stoppin á leiðinni (röð þeirra fæst úr GTFS `stop_times`), og `trip{id}` tengir ferðina milli stoppa. Athuga þarf hvort ein fyrirspurn með mörgum stoppum dugi og hve oft má spyrja.
+
 ## 11. Hýsing
 
 **Núna.** ChatGPT Sites birtir staðbundnar skrár úr `dist/` samkvæmt `.openai/hosting.json`. Aðgangsstillingin var staðfest sem sérsniðin með eiganda einum. Innskráning og aðgangur eru á hýsingarstigi. Appkóðinn sjálfur inniheldur ekki aðgangsstýringu eða notendagagnagrunn. [Í vinnuna](https://aribus-13-asvallagata.modernjuice4.chatgpt.site/)
