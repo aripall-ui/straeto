@@ -624,7 +624,7 @@ function renderTripList(rides, now) {
     }
     if (key === focused) focusTarget = button;
     item.append(button);
-    bidrod.decorate(item, button, key, trip.at, inQueue, chosen);
+    bidrod.decorate(item, button, key, trip.at, inQueue);
     items.push(item);
   };
   if (queued.length) {

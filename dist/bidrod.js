@@ -1,8 +1,8 @@
 'use strict';
 
 // Biðröð ferða, eins og „Add to queue“ í Spotify: röð í ferðalista er strokin til vinstri og sleppt
-// þegar „Í biðröð“ sést, eða ýtt á hnappinn undir valinni röð. Ferðir í biðröð fara efst í listann.
-// Raðir þurfa data-ride og data-at; hnappar data-queue og data-at. Geymt í localStorage.
+// þegar „Í biðröð“ sést. Sama hreyfing tekur ferð úr biðröð. Ferðir í biðröð fara efst í listann.
+// Raðir þurfa data-ride og data-at. Geymt í localStorage.
 const bidrod = (() => {
   const threshold = 80;
 
@@ -33,7 +33,6 @@ const bidrod = (() => {
     function toggle(key, at) {
       items = has(key) ? items.filter(item => item.key !== key) : [...items, {key, at}];
       save();
-      navigator.vibrate?.(12);
       onChange();
     }
 
@@ -92,29 +91,16 @@ const bidrod = (() => {
         suppressUntil = 0;
         event.stopImmediatePropagation();
         event.preventDefault();
-        return;
       }
-      const button = event.target.closest('[data-queue]');
-      if (!button) return;
-      event.stopImmediatePropagation();
-      toggle(button.dataset.queue, Number(button.dataset.at));
     }, true);
 
     return {has, toggle, prune, get dragging() { return Boolean(drag?.active); }};
   }
 
-  // Merkir röð og bætir hnappi undir valda röð. item er <li>, row er .ferd-hnappurinn.
-  function decorate(item, row, key, at, queued, chosen) {
+  // Merkir röð fyrir strokuna. item er <li>, row er .ferd-hnappurinn.
+  function decorate(item, row, key, at, queued) {
     row.dataset.at = at;
     item.dataset.strok = queued ? 'Úr biðröð' : 'Í biðröð';
-    if (!chosen) return;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ferd-bidrod-takki';
-    button.dataset.queue = key;
-    button.dataset.at = at;
-    button.textContent = queued ? 'Taka úr biðröð' : '＋ Setja í biðröð';
-    item.append(button);
   }
 
   return {create, decorate};

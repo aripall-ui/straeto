@@ -357,7 +357,7 @@ function renderTripList(rides, now) {
       button.append(details);
     }
     item.append(button);
-    bidrod.decorate(item, button, ride.key, ride.at, inQueue, chosen);
+    bidrod.decorate(item, button, ride.key, ride.at, inQueue);
     items.push(item);
   };
   if (queued.length) {

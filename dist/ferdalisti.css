@@ -27,7 +27,7 @@
 .ferd-bordi + li .ferd-timi small, .ferd[aria-pressed=true] .ferd-timi small { display:block; }
 .ferd-timi .departure-times { display:inline-flex; gap:5px; align-items:baseline; }
 .ferd-timi del { font-size:.75em; color:var(--muted); }
-.ferd-nanar { grid-area:nanar; display:grid; grid-template-columns:auto auto; justify-content:space-between; gap:12px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); color:var(--muted); font-size:.9rem; }
+.ferd-nanar { grid-area:nanar; display:grid; grid-template-columns:auto auto; justify-content:space-between; gap:12px; margin-top:8px; color:var(--muted); font-size:.9rem; }
 .ferd-nanar b { display:block; color:var(--ink); font-size:1rem; font-weight:750; }
 .ferd-nanar-timi { font-family:var(--mono); }
 .ferd-nanar-endi { text-align:right; }
@@ -49,5 +49,3 @@
 .ferd-bordi-bidrod { background:#2f9e5b; color:#fff; }
 .ferd-bordi-bidrod .ferd-bordi-ganga { color:#e6f7ec; }
 .ferd-stopp { display:block; color:var(--muted); font-size:.78rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:9rem; }
-.ferd-bidrod-takki { display:block; width:calc(100% - 2 * clamp(12px,4vw,24px)); margin:0 auto 12px; min-height:40px; border:1px dashed var(--signal); border-radius:10px; background:transparent; color:var(--signal); font:inherit; font-size:.92rem; font-weight:700; cursor:pointer; position:relative; z-index:1; }
-.ferdalisti > li:has(.ferd[aria-pressed=true]) { background:var(--inset); }
