@@ -12,10 +12,10 @@
 <meta name="apple-mobile-web-app-title" content="Í vinnuna">
 <script src="../../att.js?v=1" data-att="heim"></script>
 <script src="../../theme.js"></script>
-<link rel="stylesheet" href="../../heim/style.css?v=afstaedar-slodir">
+<link rel="stylesheet" href="../../heim/style.css?v=kringlan">
 <link rel="stylesheet" href="../../commute-status.css?v=footer">
 <script src="../../commute-status.js?v=timing-label" defer></script>
-<script src="../../heim/heim.js?v=afstaedar-slodir" defer></script>
+<script src="../../heim/heim.js?v=kringlan" defer></script>
 </head>
 <body data-view="all">
 <main>
@@ -34,7 +34,7 @@
 <section class="board" aria-labelledby="chosen">
 <header class="board-header chosen-heading"><h2 id="chosen">Valin ferð</h2><div class="chosen-route" id="chosen-route"></div></header>
 <div class="hero">
-<div><span class="label" id="origin">RÚV</span><div id="countdown" class="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><p id="transfer" class="label" hidden></p><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta 13</button></div>
+<div><span class="label" id="origin">RÚV</span><div id="countdown" class="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><p id="transfer" class="label" hidden></p><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta 13</button><div id="kringlan-stepper" class="stepper" role="group" aria-label="Ferðir frá Kringlunni" hidden><button id="kringlan-prev" type="button" aria-label="Fyrri ferð frá Kringlunni"><span aria-hidden="true">←</span></button><span class="stepper-label">Kringlan</span><button id="kringlan-next" type="button" aria-label="Næsta ferð frá Kringlunni"><span aria-hidden="true">→</span></button></div></div>
 <dl><div><dt>Brottför</dt><dd id="departure">—</dd></div><div class="hero-duration"><dt>Ferðatími</dt><dd id="duration">—</dd></div><div><dt id="arrival-label">Koma á Ásvallagötu</dt><dd id="arrival">—</dd></div></dl>
 </div>
 </section>

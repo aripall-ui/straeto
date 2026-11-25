@@ -43,6 +43,8 @@ let predictions;
 let request;
 let featured;
 let nextRide;
+let previousKringlan;
+let nextKringlan;
 let nextExpiry = Infinity;
 
 function secondsOfDay(value) {
@@ -242,13 +244,18 @@ function render(now) {
   byId('arrival').textContent = timestring(featured?.arrival);
   commuteStatus.showTime(featured);
   const fromKringlan = connection.from === 'Kringlan';
-  nextRide = fromKringlan
-    ? allRides.filter(ride => ride.connection.from === 'Kringlan' && ride.key !== featured.key && ride.at >= featured.at)
-      .sort((a, b) => a.at - b.at)[0]
-    : direct[0];
+  nextRide = fromKringlan ? undefined : direct[0];
   const nextRideButton = byId('next-ride');
-  nextRideButton.textContent = fromKringlan ? 'Sýna næstu ferð frá Kringlunni' : 'Sýna næsta 13';
   nextRideButton.hidden = !nextRide || nextRide.key === featured?.key;
+  // Frá Kringlunni: örvar fram og aftur milli ferða þaðan (3 og 6) í tímaröð.
+  const kringlan = allRides.filter(ride => ride.connection.from === 'Kringlan')
+    .sort((a, b) => a.at - b.at || a.key.localeCompare(b.key));
+  const position = kringlan.findIndex(ride => ride.key === featured?.key);
+  previousKringlan = fromKringlan ? kringlan[position - 1] : undefined;
+  nextKringlan = fromKringlan ? kringlan[position + 1] : undefined;
+  byId('kringlan-stepper').hidden = !fromKringlan;
+  byId('kringlan-prev').disabled = !previousKringlan;
+  byId('kringlan-next').disabled = !nextKringlan;
   const transfer = byId('transfer');
   transfer.hidden = !featured?.transfer && !featured?.missingTime;
   transfer.textContent = featured?.missingTime ? 'Skipti á Skeggjagötu óviss · ' + featured.missingTime :
@@ -332,6 +339,14 @@ byId('next-ride').addEventListener('click', () => {
   selected = nextRide?.key ?? null;
   render(Date.now());
 });
+for (const [id, step] of [['kringlan-prev', () => previousKringlan], ['kringlan-next', () => nextKringlan]]) {
+  byId(id).addEventListener('click', () => {
+    const ride = step();
+    if (!ride) return;
+    selected = ride.key;
+    render(Date.now());
+  });
+}
 setInterval(() => {
   const now = Date.now();
   commuteStatus.paintFeed(now);
