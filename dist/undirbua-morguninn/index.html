@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Undirbúa morguninn · Í vinnuna</title>
+<link rel="icon" href="/favicon.ico">
+<script src="/theme.js"></script>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/morning-plan.css?v=trip-details">
+<script src="/morning-plan.js?v=trip-details" defer></script>
+<script src="/undirbua-morguninn/planner.js?v=trip-sort" defer></script>
+</head>
+<body>
+<main>
+<header class="masthead"><h1 class="wordmark"><a href="/" aria-label="Í vinnuna, forsíða"><span class="wordmark-initial"><span>Í</span></span> vinnuna</a></h1><div class="masthead-actions"><div class="theme-picker" role="group" aria-label="Útlit"><button type="button" data-theme-choice="light" aria-label="Ljóst útlit" aria-pressed="false"><span aria-hidden="true">☀︎</span></button><button type="button" data-theme-choice="dark" aria-label="Dökkt útlit" aria-pressed="false"><span aria-hidden="true">☾</span></button></div></div></header>
+<section class="board planner" aria-labelledby="plan-title">
+<h2 id="plan-title">Undirbúa morguninn</h2>
+<form id="plan-form">
+<div class="plan-fields">
+<label>Ferðadagur <input type="date" id="plan-date" required></label>
+<label>Mæta fyrir <input type="time" id="plan-deadline"></label>
+</div>
+<details class="plan-walk"><summary>Ganga að stoppi og í vinnu</summary><h3>Heiman að stoppi</h3><div id="plan-home-walk-fields" class="plan-fields"></div><h3>Frá stoppi í vinnu</h3><div id="plan-walk-fields" class="plan-fields"></div><p class="meta">Tímarnir að stoppi eru áætlaðir og þú getur breytt þeim. Auðir reitir frá stoppi í vinnu teljast 0 mínútur.</p></details>
+<p id="plan-source" class="plan-note" hidden></p>
+<p id="plan-missing" class="plan-note" hidden></p>
+<p id="plan-status" role="status">Sæki tímaskrá…</p>
+<div class="plan-controls"><span id="plan-count" aria-live="polite">0 valdar</span><button class="text-button" type="button" id="plan-clear" disabled>Hreinsa val</button></div>
+<div id="plan-groups"></div>
+<p id="plan-error" role="alert" hidden></p>
+<div class="plan-actions">
+<div class="plan-controls"><button class="plan-save" type="submit" id="plan-save" disabled>Vista fyrir þennan dag</button><button class="plan-save plan-save-secondary" type="submit" id="plan-save-weekday" disabled>Nota á virkum dögum</button></div>
+<div class="plan-controls plan-return"><a href="/">Til baka á forsíðu</a><button type="button" class="text-button" id="plan-use-weekday" hidden>Nota venjulega planið þennan dag</button><button type="button" class="text-button" id="plan-remove-weekday" hidden>Hætta að endurtaka</button></div>
+</div>
+</form>
+</section>
+</main>
+</body>
+</html>

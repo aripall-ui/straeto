@@ -1,0 +1,16 @@
+.commute-feed {
+  margin: 0 0 10px;
+  font-size: .875rem;
+}
+.commute-footer {
+  margin: 20px 0 0;
+  text-align: center;
+}
+.commute-footer a {
+  color: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.commute-feed, .commute-time-source { color: var(--muted); }
+.commute-time-source { font-size: .875rem; }
+.commute-time-source:empty { display: none; }
