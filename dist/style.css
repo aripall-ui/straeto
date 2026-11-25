@@ -102,10 +102,12 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .board-ride-button:focus-visible,.preview:focus-visible{outline:none}
 .board-ride-button:focus-visible,.board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{color:var(--signal)}
 .board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{font-weight:850}
-.stepper{display:flex;width:fit-content;align-items:center;gap:2px;margin-top:8px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
+.stepper{display:flex;width:fit-content;align-items:center;gap:2px;margin-top:4px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
 .stepper[hidden]{display:none}
 .stepper button{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:var(--signal);font:700 1.15rem system-ui,sans-serif;cursor:pointer}
 .stepper button:hover:not(:disabled){background:var(--inset)}
 .stepper button:disabled{color:var(--line);cursor:default}
 .stepper-label{padding:0 6px;font-size:.9rem;font-weight:750}
 .stepper-time{min-width:4.2em;text-align:center;font:750 1.05rem ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}
+.hero dd[hidden]{display:none}
+.stepper button{width:36px;height:36px}

@@ -64,7 +64,7 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .text-button{font:inherit;color:var(--signal);background:transparent;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .text-button{font-size:.875rem;padding:4px 0;margin-top:4px}
 .text-button[hidden]{display:none}
-.stepper{display:flex;width:fit-content;align-items:center;gap:2px;margin-top:8px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
+.stepper{display:flex;width:fit-content;align-items:center;gap:2px;margin-top:4px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink)}
 .stepper[hidden]{display:none}
 .stepper button{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:var(--signal);font:700 1.15rem system-ui,sans-serif;cursor:pointer}
 .stepper button:hover:not(:disabled){background:var(--inset)}
@@ -114,7 +114,7 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .board-ride-button:focus-visible,.preview:focus-visible{outline:none}
 .board-ride-button:focus-visible,.board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{color:var(--signal)}
 .board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{font-weight:850}
-.chosen-heading{justify-content:space-between}
+.chosen-heading{justify-content:flex-start}
 .chosen-heading .chosen-route{margin:0}
 .route-11{background:#e04b8b;color:#101d33}
 .route-18{background:#fa7655;color:#101d33}
@@ -138,3 +138,5 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 @media(max-width:600px){.hero{grid-template-columns:1fr}.hero dl{justify-content:space-between}.hero dl>div:first-child{text-align:left}}
 
 @media(max-width:480px){.station th,.station td{padding-inline:7px}.station th:nth-child(3),.station .station-duration{padding-inline:3px}.station th:last-child{overflow-wrap:anywhere}}
+.hero dd[hidden]{display:none}
+.stepper button{width:36px;height:36px}

@@ -236,6 +236,7 @@ function render(now) {
   const connection = featured?.connection ?? connections[0];
   nextExpiry = Math.min(...groups.flatMap(rides => rides.length ? [rides[0].at + minute] : []));
   byId('chosen-route').replaceChildren(routesFor(connection));
+  byId('chosen').textContent = connection.label;
   byId('origin').textContent = connection.from;
   renderCountdown(now);
   byId('departure').textContent = timestring(featured?.at);
@@ -254,6 +255,7 @@ function render(now) {
   previousKringlan = fromKringlan ? kringlan[position - 1] : undefined;
   nextKringlan = fromKringlan ? kringlan[position + 1] : undefined;
   byId('kringlan-stepper').hidden = !fromKringlan;
+  byId('departure').hidden = fromKringlan;
   byId('kringlan-time').textContent = fromKringlan ? timestring(featured.at) : '';
   byId('kringlan-prev').disabled = !previousKringlan;
   byId('kringlan-next').disabled = !nextKringlan;

@@ -529,6 +529,7 @@ function renderPrimary(now) {
   const position = universityRides.findIndex(trip => rideKey(trip) === selectedRide);
   universitySteps = fromUniversity ? [universityRides[position - 1], universityRides[position + 1]] : [];
   byId('hi-stepper').hidden = !fromUniversity;
+  byId('departure').hidden = fromUniversity;
   byId('hi-time').textContent = fromUniversity ? clock.format(boardRide.at) : '';
   byId('next-ride').hidden = !chosen || fromUniversity;
   byId('hi-prev').disabled = !universitySteps[0];
