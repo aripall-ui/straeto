@@ -21,11 +21,13 @@ Talaðu við notandann á **íslensku**. Viðmótið er allt á íslensku.
   - `morning-plan.js`: sameiginlegir útreikningar og vistun plana (`localStorage`).
   - `commute-status.js`, `commute-weather.js`, `theme.js`: stöðutexti, veður og ljóst/dökkt útlit.
   - `att.js`, `att.css`: flipar og sjálfvirk átt (sjá ofar).
+  - `naerkort.js`, `naerkort.css`, `kort.json`: nándarkort á báðum forsíðum. Leiðarlína að brottfararstoppi, stopp og daufar línur annarra strætóleiða sem götur, ásamt rauntímastaðsetningu vagnsins (`lat`/`lng` úr `BusLocationByStop`). Opnast sjálft 5 mín. fyrir brottför; pínulítill „Kort“-hnappur í haus spjaldsins opnar og lokar. `/?kort=prufa` (og `/heim/?kort=prufa`) sýnir sýnidæmi.
   - `morgundagur.js`, `morgundagur.css`: plan fyrir næsta vinnudag, notað á báðum forsíðum. Flís neðst ef plan er til, spjald ef það vantar, ekkert á morgnana. Krefst `morning-plan.js`.
   - `timetable.json`: pökkuð GTFS-tímatafla. Gildir til `lastDay` (dagar frá 1970-01-01). Strætó birtir bara ~6 vikur fram í tímann, svo hún er uppfærð sjálfkrafa daglega.
 - `dist/heim/`: heimleiðarappið. `index.html` + `heim.js` + eigin `style.css` (að hluta sameiginlegt með `dist/style.css`), `fleiri-ferdir/`. Notar manifest rótarinnar. Notar ekki `timetable.json`. Stopp og leiðir eru efst í `heim.js`. `localStorage`-lykill: `heim-limit-walking`.
 - `tools/update-timetable.py`: endurgerir `dist/timetable.json` úr GTFS-ZIP-skrá Strætó.
-- `.github/workflows/timetable.yml`: sækir GTFS daglega kl. 04:17, endurgerir `timetable.json`, ýtir á `main` ef breyting og ræsir birtingu. Mistekst ef færri en 7 dagar eru eftir af gildistíma (GitHub sendir þá tölvupóst).
+- `tools/update-map.py`: endurgerir `dist/kort.json` úr sömu skrá. Leiðarhlutarnir (leið + brottfararstopp) eru efst í skránni og þurfa að passa við `app.js` og `heim/heim.js`.
+- `.github/workflows/timetable.yml`: sækir GTFS daglega kl. 04:17, endurgerir `timetable.json` og `kort.json`, ýtir á `main` ef breyting og ræsir birtingu. Mistekst ef færri en 7 dagar eru eftir af gildistíma (GitHub sendir þá tölvupóst).
 - `.github/workflows/pages.yml`: birtir `dist/` á GitHub Pages (https://aripall-ui.github.io/straeto/) við hvert push á `main`. Strætó-API-ið samþykkir beiðnir frá þeirri slóð (CORS staðfest 25. nóv. 2026).
 - `.openai/hosting.json`, `docs/heim-hosting.json`: stillingar gömlu ChatGPT Sites-hýsingarinnar.
 - `docs/`: handoff og önnur skjöl.

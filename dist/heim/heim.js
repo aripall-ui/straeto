@@ -66,7 +66,7 @@ function serviceTimes(leg, data, now) {
     const exit = arrivals.get(row.trip?.id);
     const offset = exit == null ? null : (exit - departure + 86400) % 86400;
     const arrival = offset !== null && offset <= 7200 ? at + offset * 1000 : null;
-    return [{key: String(row.trip?.id ?? at), at, arrival}];
+    return [{key: String(row.trip?.id ?? at), at, arrival, lat: row.lat, lng: row.lng}];
   }).sort((a, b) => a.at - b.at);
 }
 
@@ -119,6 +119,9 @@ function renderCountdown(now) {
   const value = countdown(featured?.at, now);
   if (node.textContent !== value) node.textContent = value;
   node.classList.toggle('countdown-long', value.startsWith('Eftir '));
+  const leg = featured?.connection.legs[0];
+  if (main) naerkort.update(featured && {route: leg.number, board: leg.board, at: featured.at, key: featured.key,
+    lat: featured.lat, lng: featured.lng});
 }
 
 function element(tag, value, classes) {
@@ -272,7 +275,7 @@ async function refresh() {
   request = controller;
   const stops = [...new Set(connections.flatMap(connection => connection.legs.flatMap(leg => [leg.board, leg.exit])))];
   const query = '{' + stops.map(id => 's' + id + ':BusLocationByStop(stopId:"' + id +
-    '"){arrivals{arrival routeNr headsign trip{id}}}').join(' ') + '}';
+    '"){arrivals{arrival routeNr headsign lat lng trip{id}}}').join(' ') + '}';
   const timeout = setTimeout(() => controller.abort(), 8000);
   let data;
   try {

@@ -25,8 +25,11 @@ jobs:
         with:
           ref: main
 
-      - name: Sækja GTFS og endurgera tímatöflu
-        run: python3 tools/update-timetable.py
+      - name: Sækja GTFS og endurgera tímatöflu og kortagögn
+        run: |
+          curl -fsSL -o /tmp/gtfs.zip https://opendata.straeto.is/data/gtfs/gtfs.zip
+          python3 tools/update-timetable.py /tmp/gtfs.zip
+          python3 tools/update-map.py /tmp/gtfs.zip
 
       - name: Athuga gildistíma
         run: |
@@ -44,14 +47,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- dist/timetable.json; then
-            echo 'Engin breyting á tímatöflu.'
+          if git diff --quiet -- dist/timetable.json dist/kort.json; then
+            echo 'Engin breyting á tímatöflu eða kortagögnum.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add dist/timetable.json
-          git commit -m 'Uppfæra tímatöflu úr GTFS Strætó'
+          git add dist/timetable.json dist/kort.json
+          git commit -m 'Uppfæra tímatöflu og kortagögn úr GTFS Strætó'
           git push origin HEAD:main
           # Push með GITHUB_TOKEN ræsir ekki önnur ferli, svo birtingin er ræst sérstaklega.
           gh workflow run pages.yml --ref main

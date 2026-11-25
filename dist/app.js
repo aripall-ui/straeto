@@ -12,11 +12,6 @@ const routes = {
 const alternativeRoutes = ['1', '3', '6'];
 const mainPage = document.body.dataset.view === 'main';
 const byId = id => document.getElementById(id);
-const approachMap = byId('approach-map');
-const approachLine = approachMap?.querySelector('[data-approach]');
-const approachBus = approachMap?.querySelector('[data-bus]');
-const previewApproach = new URLSearchParams(window.location.search).get('kort') === 'prufa';
-const approachWindow = 120000;
 
 const clock = new Intl.DateTimeFormat('is-IS', {
   timeZone: 'Atlantic/Reykjavik', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
@@ -116,7 +111,7 @@ function buildTrips(number, boardingRows, arrivalRows, now, schedule) {
       }
     }
     return [{number, at, arrival, estimatedArrival, difference, plannedDeparture: scheduled?.departure,
-      key: String(row.trip?.id ?? at)}];
+      key: String(row.trip?.id ?? at), lat: row.lat, lng: row.lng}];
   }).sort((a, b) => a.at - b.at);
 }
 
@@ -537,7 +532,8 @@ function updateCountdown(featured, now) {
   const value = featured ? countdown(featured.at - now) : '–:––';
   const display = byId('countdown');
   if (display.textContent !== value) display.textContent = value;
-  if (approachMap) updateApproachMap(featured, now);
+  if (mainPage) naerkort.update(featured && {route: featured.number, board: routes[featured.number].board,
+    at: featured.at, key: rideKey(featured), lat: featured.lat, lng: featured.lng});
 }
 
 function updateSavedCountdown(now) {
@@ -547,18 +543,6 @@ function updateSavedCountdown(now) {
   if (timer.textContent !== text) timer.textContent = text;
 }
 
-
-function updateApproachMap(featured, now) {
-  const remaining = previewApproach ? approachWindow / 2 : featured?.at - now;
-  const show = previewApproach || (featured?.number === '13' && remaining >= 0 && remaining <= approachWindow);
-  approachMap.hidden = !show;
-  if (!show) return;
-  const caption = byId('approach-map-caption');
-  if (previewApproach) caption.textContent = 'Sýnidæmi · 1 mín. í brottför';
-  const distance = approachLine.getTotalLength() * (1 - remaining / approachWindow);
-  const point = approachLine.getPointAtLength(distance);
-  approachBus.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')');
-}
 
 function renderPreview(next) {
   const container = byId('alternatives');
@@ -668,7 +652,7 @@ async function refresh() {
   const numbers = ['13', ...alternativeRoutes];
   const stops = [...new Set(numbers.flatMap(number => [routes[number].board, routes[number].exit]))];
   const query = '{' + stops.map(id => 's' + id + ':BusLocationByStop(stopId:"' + id +
-    '"){arrivals{arrival routeNr headsign trip{id}}}').join(' ') + '}';
+    '"){arrivals{arrival routeNr headsign lat lng trip{id}}}').join(' ') + '}';
   const timeout = setTimeout(() => controller.abort(), 8000);
   const nextTrips = {};
   const failed = new Set();

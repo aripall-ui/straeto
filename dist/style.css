@@ -103,9 +103,3 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .board-ride-button:focus-visible,.board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{color:var(--signal)}
 .board-ride-button:focus-visible .meta,.preview:focus-visible .preview-headsign{font-weight:850}
 
-.approach-map { margin: 0; padding: 12px 16px; background: var(--inset); }
-.approach-map figcaption { color: var(--muted); font-size: .875rem; }
-.approach-map svg { display: block; width: 100%; height: auto; max-height: 240px; }
-.approach-map .stop-name { fill: var(--ink); font-size: 14px; paint-order: stroke; stroke: var(--inset); stroke-width: 4px; }
-.approach-map .map-stops circle { fill: var(--inset); stroke: var(--signal); stroke-width: 2px; }
-.approach-map .bus-number { fill: var(--inset); font-size: 14px; font-weight: 800; }
