@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101d33">
+<meta name="description" content="Niðurtalning í strætó heim að Ásvallagötu.">
+<title>Fleiri ferðir · Heim</title>
+<link rel="icon" href="../../heim/icons/heim-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../icons/apple-touch-icon-v3.png" sizes="180x180">
+<link rel="manifest" href="../../manifest.webmanifest" crossorigin="use-credentials">
+<meta name="apple-mobile-web-app-title" content="Í vinnuna">
+<script src="../../att.js?v=1" data-att="heim"></script>
+<script src="../../theme.js"></script>
+<link rel="stylesheet" href="../../heim/style.css?v=afstaedar-slodir">
+<link rel="stylesheet" href="../../commute-status.css?v=footer">
+<script src="../../commute-status.js?v=timing-label" defer></script>
+<script src="../../heim/heim.js?v=afstaedar-slodir" defer></script>
+</head>
+<body data-view="all">
+<main>
+<a class="back" id="back-home" href="../../heim/">Heim</a>
+<header class="masthead">
+<h1 class="wordmark"><span class="wordmark-initial"><span>F</span></span>leiri ferðir</h1>
+<div class="masthead-actions">
+<div class="theme-picker" role="group" aria-label="Útlit">
+<button type="button" data-theme-choice="light" aria-label="Ljóst útlit" aria-pressed="false"><span aria-hidden="true">☀︎</span></button>
+<button type="button" data-theme-choice="dark" aria-label="Dökkt útlit" aria-pressed="false"><span aria-hidden="true">☾</span></button>
+</div>
+<button id="refresh" type="button" aria-label="Uppfæra tíma" title="Uppfæra tíma">↻</button>
+</div>
+</header>
+<p id="commute-feed" class="commute-feed" role="status">Sæki tíma frá Strætó…</p>
+<section class="board" aria-labelledby="chosen">
+<header class="board-header chosen-heading"><h2 id="chosen">Valin ferð</h2><div class="chosen-route" id="chosen-route"></div></header>
+<div class="hero">
+<div><span class="label" id="origin">RÚV</span><div id="countdown" class="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><p id="transfer" class="label" hidden></p><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta 13</button></div>
+<dl><div><dt>Brottför</dt><dd id="departure">—</dd></div><div class="hero-duration"><dt>Ferðatími</dt><dd id="duration">—</dd></div><div><dt id="arrival-label">Koma á Ásvallagötu</dt><dd id="arrival">—</dd></div></dl>
+</div>
+</section>
+
+<section class="board" aria-labelledby="next-direct-heading">
+<header class="board-header"><span class="route route-13">13</span><h2 id="next-direct-heading">RÚV → Ásvallagata</h2></header>
+<table class="station" aria-label="Næstu tvær ferðir á leið 13">
+<thead><tr><th scope="col">Leið</th><th scope="col">Brottför</th><th scope="col"><span class="visually-hidden">Ferðatími</span></th><th scope="col">Koma</th></tr></thead>
+<tbody id="next-direct"><tr><td colspan="4">Sæki tíma…</td></tr></tbody>
+</table>
+</section>
+<section class="board" aria-labelledby="options-heading">
+<header class="board-header"><h2 id="options-heading">Aðrir kostir</h2></header>
+<table class="station" aria-label="Aðrir kostir á leiðum 1, 3, 6, 11 og 18">
+<thead><tr><th scope="col">Leið</th><th scope="col">Brottför</th><th scope="col"><span class="visually-hidden">Ferðatími</span></th><th scope="col">Koma</th></tr></thead>
+<tbody id="rides"><tr><td colspan="4">Sæki tíma…</td></tr></tbody>
+</table>
+<div class="walk-options" role="group" aria-label="Göngutími">
+<button class="walk-mode" type="button" data-walk-mode="more" aria-pressed="true">Styttri ferð</button>
+<button class="walk-mode" type="button" data-walk-mode="less" aria-pressed="false">Minna labb</button>
+</div>
+</section>
+<section class="board" aria-labelledby="later-heading">
+<header class="board-header"><span class="route route-13" aria-hidden="true">13</span><h2 id="later-heading">Seinni ferðir á leið 13</h2></header>
+<table class="station" aria-label="Seinni ferðir á leið 13">
+<thead><tr><th scope="col">Ferð</th><th scope="col">Brottför</th><th scope="col"><span class="visually-hidden">Ferðatími</span></th><th scope="col">Koma á Ásvallagötu</th></tr></thead>
+<tbody id="direct-rides"><tr><td colspan="4">Sæki tíma…</td></tr></tbody>
+</table>
+</section>
+<footer class="commute-footer"><a href="../../">Ertu að fara í vinnuna?</a></footer>
+</main>
+</body>
+</html>
