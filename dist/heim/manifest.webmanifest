@@ -1,21 +1,21 @@
 {
-  "id": "/heim/",
+  "id": "./",
   "name": "Heim",
   "short_name": "Heim",
   "lang": "is",
-  "start_url": "/heim/",
-  "scope": "/heim/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "theme_color": "#101d33",
   "background_color": "#101d33",
   "icons": [
     {
-      "src": "/heim/icons/heim-192.png",
+      "src": "icons/heim-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/heim/icons/heim-512.png",
+      "src": "icons/heim-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

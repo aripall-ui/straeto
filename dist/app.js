@@ -1,5 +1,8 @@
 'use strict';
 
+// Rót vefsins, svo slóðir virki líka þegar hann er hýstur í undirmöppu (t.d. GitHub Pages).
+const appRoot = new URL('./', document.currentScript.src).href;
+
 const routes = {
   '13': {board: '90000179', exit: '90000083', sign: 'Sléttuvegur', to: 'RÚV'},
   '1': {board: '90000296', exit: '90000015', sign: 'Hfj. Skarðshlíð', to: 'Kringlumýrar\u00adbraut'},
@@ -75,7 +78,7 @@ function scheduledTimes(schedule, number, tripId, predicted) {
 async function loadTimetable(signal) {
   if (timetable) return timetable;
   try {
-    const response = await fetch('/timetable.json', {signal});
+    const response = await fetch(appRoot + 'timetable.json', {signal});
     if (response.ok) timetable = await response.json();
   } catch {
     // The board can still display predictions while the timetable is unavailable.
@@ -409,7 +412,7 @@ function renderSavedRides(now, mainRide, sortedRides) {
   const {date, plan} = savedBoard;
   byId('saved-morning-heading').textContent = date === morningPlan.today(now)
     ? 'Mínar ferðir í dag' : 'Mínar ferðir í fyrramálið';
-  byId('edit-morning-plan').href = '/undirbua-morguninn/?' + new URLSearchParams({dagur: date});
+  byId('edit-morning-plan').href = appRoot + 'undirbua-morguninn/?' + new URLSearchParams({dagur: date});
   byId('saved-morning-date').textContent = morningPlan.dateLabel(date) +
     (plan.recurring ? ' · Venjulega planið' : '') +
     (plan.deadline ? ' · Mæta fyrir ' + plan.deadline : '');
@@ -496,7 +499,7 @@ function renderPrimary(now) {
   }
 
   if (service.closed) {
-    byId('night-prepare').href = '/undirbua-morguninn/?' + new URLSearchParams({dagur: service.date});
+    byId('night-prepare').href = appRoot + 'undirbua-morguninn/?' + new URLSearchParams({dagur: service.date});
     boardRide = undefined;
     selectedRide = null;
     nextBoardChange = service.boundary;
@@ -526,7 +529,7 @@ function renderPrimary(now) {
   }
   byId('ride-label').textContent = chosen ? 'Valin ferð' : 'Næsti vagn';
   byId('next-ride').hidden = !chosen;
-  byId('all-rides').href = chosen ? '/a-hradferd/?' + new URLSearchParams({ferd: selectedRide}) : '/a-hradferd/';
+  byId('all-rides').href = chosen ? appRoot + 'a-hradferd/?' + new URLSearchParams({ferd: selectedRide}) : appRoot + 'a-hradferd/';
   renderRideRows('primary', local.slice(0, 5), now, unavailable.has('13'));
   renderPreview(preview);
 }

@@ -1,4 +1,4 @@
-@font-face{font-family:"Archivo Black";src:url("/fonts/archivo-black.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"Archivo Black";src:url("fonts/archivo-black.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
 :root{color-scheme:dark;background:var(--canvas);color:var(--ink);font-family:system-ui,sans-serif;--canvas:#101d33;--ink:#eff5ff;--paper:#192a46;--inset:#12213a;--line:#425978;--muted:#becde4;--signal:#a8d9ff;--late:#ffb19b;--early:#a5e2ff;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
 :root[data-theme=light]{color-scheme:light;--canvas:#edf4fd;--ink:#172b48;--paper:#fcfdff;--inset:#e0edfb;--line:#b7cae5;--muted:#435d80;--signal:#174f91;--late:#963724;--early:#155982}
 *{box-sizing:border-box}

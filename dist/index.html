@@ -6,28 +6,28 @@
 <meta name="theme-color" content="#101d33">
 <meta name="description" content="Næstu ferðir á leið 13 frá Ásvallagötu og komutímar á RÚV.">
 <title>Í vinnuna · 13</title>
-<link rel="icon" href="/icons/favicon-v3.png" sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon-v3.png" sizes="180x180">
-<link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
+<link rel="icon" href="icons/favicon-v3.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-v3.png" sizes="180x180">
+<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
 <meta name="apple-mobile-web-app-title" content="Í vinnuna">
-<script src="/theme.js"></script>
-<link rel="stylesheet" href="/style.css?v=approach-map">
-<link rel="stylesheet" href="/commute-status.css?v=footer">
-<link rel="stylesheet" href="/morning-plan.css?v=morning-countdown">
-<link rel="stylesheet" href="/commute-weather.css?v=temperatures">
-<script src="/commute-status.js?v=timing-label" defer></script>
-<script src="/morning-plan.js?v=trip-details" defer></script>
-<script src="/commute-weather.js?v=sky" defer></script>
-<script src="/app.js?v=morning-countdown" defer></script>
+<script src="theme.js"></script>
+<link rel="stylesheet" href="style.css?v=afstaedar-slodir">
+<link rel="stylesheet" href="commute-status.css?v=footer">
+<link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
+<link rel="stylesheet" href="commute-weather.css?v=temperatures">
+<script src="commute-status.js?v=timing-label" defer></script>
+<script src="morning-plan.js?v=trip-details" defer></script>
+<script src="commute-weather.js?v=sky" defer></script>
+<script src="app.js?v=afstaedar-slodir" defer></script>
 </head>
 <body data-view="main">
 <main>
-<header class="masthead"><h1 class="wordmark"><a href="/" aria-label="Í vinnuna, forsíða"><span class="wordmark-initial"><span>Í</span></span> vinnuna</a></h1><div class="masthead-actions"><div class="theme-picker" role="group" aria-label="Útlit"><button type="button" data-theme-choice="light" aria-label="Ljóst útlit" aria-pressed="false"><span aria-hidden="true">☀︎</span></button><button type="button" data-theme-choice="dark" aria-label="Dökkt útlit" aria-pressed="false"><span aria-hidden="true">☾</span></button></div><button id="refresh" type="button" aria-label="Uppfæra tíma" title="Uppfæra tíma">↻</button></div></header>
+<header class="masthead"><h1 class="wordmark"><a href="./" aria-label="Í vinnuna, forsíða"><span class="wordmark-initial"><span>Í</span></span> vinnuna</a></h1><div class="masthead-actions"><div class="theme-picker" role="group" aria-label="Útlit"><button type="button" data-theme-choice="light" aria-label="Ljóst útlit" aria-pressed="false"><span aria-hidden="true">☀︎</span></button><button type="button" data-theme-choice="dark" aria-label="Dökkt útlit" aria-pressed="false"><span aria-hidden="true">☾</span></button></div><button id="refresh" type="button" aria-label="Uppfæra tíma" title="Uppfæra tíma">↻</button></div></header>
 <p id="departed-trips" class="departed-trips" role="status"></p>
 <section id="saved-morning" class="board saved-morning" aria-labelledby="saved-morning-heading" hidden>
 <header class="board-header saved-morning-header">
 <div><h2 id="saved-morning-heading">Mínar ferðir</h2><p id="saved-morning-date" class="plan-note"></p></div>
-<a id="edit-morning-plan" href="/undirbua-morguninn/">Breyta vali</a>
+<a id="edit-morning-plan" href="undirbua-morguninn/">Breyta vali</a>
 </header>
 <p id="saved-morning-missing" class="plan-note saved-morning-missing" hidden></p>
 <div id="saved-morning-main" class="saved-morning-main" aria-labelledby="saved-ride-title"></div>
@@ -45,7 +45,7 @@
 <p id="commute-feed" class="commute-feed" role="status" hidden>Sæki tíma frá Strætó…</p>
 <section id="night-board" class="board night-board" aria-labelledby="night-heading" hidden>
 <h2 id="night-heading">Strætó er hættur að ganga í dag</h2>
-<a href="/undirbua-morguninn/" class="plan-link" id="night-prepare">Undirbúa morguninn</a>
+<a href="undirbua-morguninn/" class="plan-link" id="night-prepare">Undirbúa morguninn</a>
 </section>
 <div id="commute-weather-day">
 <section id="commute-weather" class="board commute-weather" aria-labelledby="commute-weather-title" hidden>
@@ -108,12 +108,12 @@
 </table>
 </section>
 <div id="commute-weather-night"></div>
-<a id="prepare-morning" class="plan-link" href="/undirbua-morguninn/" hidden>Undirbúa morguninn</a>
+<a id="prepare-morning" class="plan-link" href="undirbua-morguninn/" hidden>Undirbúa morguninn</a>
 <section id="alternatives-board" class="teaser" aria-labelledby="teaser-heading" hidden>
-<div class="teaser-header"><h2 id="teaser-heading">Á hraðferð?</h2><a id="all-rides" href="/a-hradferd/">Sjá allar ferðir</a></div>
+<div class="teaser-header"><h2 id="teaser-heading">Á hraðferð?</h2><a id="all-rides" href="a-hradferd/">Sjá allar ferðir</a></div>
 <div id="alternatives" class="teaser-grid"><p>Sæki tíma…</p></div>
 </section>
-<footer class="commute-footer"><a href="/heim/">Ertu á leiðinni heim?</a></footer>
+<footer class="commute-footer"><a href="heim/">Ertu á leiðinni heim?</a></footer>
 </main>
 </body>
 </html>

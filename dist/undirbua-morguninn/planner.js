@@ -1,5 +1,8 @@
 'use strict';
 
+// Rót vefsins, svo slóðir virki líka þegar hann er hýstur í undirmöppu (t.d. GitHub Pages).
+const plannerRoot = new URL('../', document.currentScript.src).href;
+
 const byId = id => document.getElementById(id);
 const date = byId('plan-date');
 const deadline = byId('plan-deadline');
@@ -269,7 +272,7 @@ byId('plan-clear').addEventListener('click', () => {
 function persist(change) {
   try {
     change();
-    location.href = '/';
+    location.href = plannerRoot;
   } catch {
     const error = byId('plan-error');
     error.hidden = false;
@@ -301,7 +304,7 @@ byId('plan-remove-weekday').addEventListener('click', () => persist(morningPlan.
 
 (async () => {
   try {
-    const response = await fetch('/timetable.json');
+    const response = await fetch(plannerRoot + 'timetable.json');
     if (!response.ok) throw new Error('Timetable unavailable');
     schedule = await response.json();
     resetDate();
