@@ -13,7 +13,7 @@
 <script src="att.js?v=1" data-att="vinna" data-forsida></script>
 <link rel="stylesheet" href="att.css?v=1">
 <script src="theme.js"></script>
-<link rel="stylesheet" href="style.css?v=hi2">
+<link rel="stylesheet" href="style.css?v=tima-orvar">
 <link rel="stylesheet" href="commute-status.css?v=footer">
 <link rel="stylesheet" href="morning-plan.css?v=morning-countdown">
 <link rel="stylesheet" href="morgundagur.css?v=1">
@@ -24,7 +24,7 @@
 <script src="morgundagur.js?v=1" defer></script>
 <script src="commute-weather.js?v=mm" defer></script>
 <script src="naerkort.js?v=1" defer></script>
-<script src="app.js?v=hi2" defer></script>
+<script src="app.js?v=tima-orvar" defer></script>
 </head>
 <body data-view="main">
 <main>
@@ -79,7 +79,7 @@
 <section id="departures-board" class="board" aria-labelledby="stop" hidden>
 <header class="board-header"><span id="main-route" class="route route-13">13</span><h2 id="stop">Ásvallagata → Sléttuvegur</h2><button id="kort-takki" class="kort-takki" type="button" aria-expanded="false" aria-controls="naerkort" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3" fill="currentColor"/></svg>Kort</button></header>
 <div class="hero">
-<div><span class="label" id="ride-label" role="status">Næsti vagn</span><div class="countdown" id="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><div id="countdown-timing"></div><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta vagn</button><div id="hi-stepper" class="stepper" role="group" aria-label="Aðrar ferðir frá HÍ" hidden><button id="hi-prev" type="button" aria-label="Fyrri ferð"><span aria-hidden="true">←</span></button><span class="stepper-label">Aðrar ferðir frá HÍ</span><button id="hi-next" type="button" aria-label="Næsta ferð"><span aria-hidden="true">→</span></button></div></div>
+<div><span class="label" id="ride-label" role="status">Næsti vagn</span><div class="countdown" id="countdown">–:––</div><p id="commute-time-source" class="commute-time-source"></p><div id="countdown-timing"></div><button id="next-ride" class="text-button" type="button" hidden>Sýna næsta vagn</button><div id="hi-stepper" class="stepper" role="group" aria-label="Aðrar ferðir frá HÍ" hidden><button id="hi-prev" type="button" aria-label="Fyrri ferð"><span aria-hidden="true">←</span></button><span id="hi-time" class="stepper-label stepper-time"></span><button id="hi-next" type="button" aria-label="Næsta ferð"><span aria-hidden="true">→</span></button></div></div>
 <dl><div><dt>Brottför</dt><dd id="departure">—</dd></div><div><dt id="arrival-label">Koma á RÚV</dt><dd id="arrival">—</dd></div></dl>
 </div>
 <figure id="naerkort" class="naerkort" hidden><figcaption id="naerkort-texti"></figcaption></figure>

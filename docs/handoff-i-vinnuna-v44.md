@@ -33,7 +33,7 @@ Markmiðið til lengri tíma er að fleiri geti sett upp sínar eigin ferðir og
 - **Ekkert plan** fyrir morgundaginn og hann er virkur dagur: spjald „Ekkert plan fyrir morgundaginn · Undirbúa morguninn“ undir aðalspjaldinu (Í vinnuna: undir ferðaspjaldinu eða „Strætó er hættur að ganga í dag“; Heim: undir Valin ferð).
 - **Helgi fram undan og ekkert plan:** ekkert sést. Ekkert sést heldur á meðan Mínar ferðir eru sýndar.
 
-**Örvar milli ferða (25. nóv.).** Þegar valin ferð á Í vinnuna er frá HÍ (1 og 3 frá HÍ B, 6 frá HÍ C) birtist „← Aðrar ferðir frá HÍ →“ undir niðurtalningunni sem fer í tímaröð milli HÍ-ferðanna, og „Sýna næsta vagn“ er þá falið. Merkið var fyrst „HÍ“ en það virtist eins og valið væri milli stoppistöðva. Á Heim kemur „← Kringlan →“ í stað „Sýna næstu ferð frá Kringlunni“ og fer milli ferða 3 og 6 frá Kringlunni.
+**Örvar milli ferða (25. nóv.).** Þegar valin ferð á Í vinnuna er frá HÍ (1 og 3 frá HÍ B, 6 frá HÍ C) birtist „← 18:51 →“ (brottfarartími valinnar ferðar milli örva) undir niðurtalningunni sem fer í tímaröð milli HÍ-ferðanna, og „Sýna næsta vagn“ er þá falið. Merkið var fyrst „HÍ“ (virtist eins og val milli stoppistöðva), svo „Aðrar ferðir frá HÍ“, en tíminn segir meira. Á Heim kemur „← 18:29 →“ í stað „Sýna næstu ferð frá Kringlunni“ og fer milli ferða 3 og 6 frá Kringlunni.
 
 ### Skipuleggja og vista ferð
 

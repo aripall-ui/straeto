@@ -70,6 +70,7 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .stepper button:hover:not(:disabled){background:var(--inset)}
 .stepper button:disabled{color:var(--line);cursor:default}
 .stepper-label{padding:0 6px;font-size:.9rem;font-weight:750}
+.stepper-time{min-width:4.2em;text-align:center;font:750 1.05rem ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}
 .teaser-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
 .preview{display:grid;grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:center;gap:6px 9px;padding:9px;border:1px solid var(--line);text-align:left;cursor:pointer}
 .preview:hover{background:var(--paper)}

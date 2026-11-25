@@ -254,6 +254,7 @@ function render(now) {
   previousKringlan = fromKringlan ? kringlan[position - 1] : undefined;
   nextKringlan = fromKringlan ? kringlan[position + 1] : undefined;
   byId('kringlan-stepper').hidden = !fromKringlan;
+  byId('kringlan-time').textContent = fromKringlan ? timestring(featured.at) : '';
   byId('kringlan-prev').disabled = !previousKringlan;
   byId('kringlan-next').disabled = !nextKringlan;
   const transfer = byId('transfer');

@@ -108,3 +108,4 @@ th:not(:first-child),td:not(:first-child){text-align:right}
 .stepper button:hover:not(:disabled){background:var(--inset)}
 .stepper button:disabled{color:var(--line);cursor:default}
 .stepper-label{padding:0 6px;font-size:.9rem;font-weight:750}
+.stepper-time{min-width:4.2em;text-align:center;font:750 1.05rem ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}
