@@ -33,3 +33,6 @@
 .ferd-nanar-timi { font-family:var(--mono); }
 .ferd-nanar-endi { text-align:right; }
 .ferd-tomt { padding:14px clamp(12px,4vw,24px); color:var(--muted); }
+.ferd > .route-group { grid-area:leid; flex-wrap:nowrap; gap:3px; color:var(--muted); font-weight:700; }
+.ferd > .route-group .route { min-width:1.9rem; padding:5px 4px; font-size:.95rem; }
+.ferd-nanar-skipti { grid-column:1 / -1; color:var(--ink); }
