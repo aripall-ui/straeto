@@ -289,7 +289,13 @@ function walksFor(ride) {
 }
 
 function renderTripList(rides, now) {
-  const upcomingRides = rides.filter(ride => ride.at >= now).sort((a, b) => a.at - b.at);
+  // Ferð sem ekki næst lengur (komið fram yfir „Út úr vinnu“) er merkt í eina mínútu og svo falin.
+  const leaveAt = ride => ride.at - walksFor(ride).work * minute;
+  const upcomingRides = rides.filter(ride => ride.at >= now && now <= leaveAt(ride) + minute).sort((a, b) => a.at - b.at);
+  for (const ride of upcomingRides) {
+    const leave = leaveAt(ride);
+    nextExpiry = Math.min(nextExpiry, (leave >= now ? leave : leave + minute) + 1);
+  }
   const soon = upcomingRides.filter(ride => ride.at <= now + 60 * minute);
   let shown = soon.length >= 4 ? soon : upcomingRides.slice(0, 4);
   if (listView.group) shown = shown.filter(ride => (ride.connection.key === 'direct') === (listView.group === 'beint'));
@@ -324,14 +330,15 @@ function renderTripList(rides, now) {
       previousStop = from;
     }
     const item = document.createElement('li');
+    const late = now > ride.at - work * minute;
     const button = choiceButton(ride, ride.connection.label,
-      'ferd' + (ride.connection.key === 'direct' && listView.group !== 'beint' ? ' ferd-13' : ''));
+      'ferd' + (ride.connection.key === 'direct' && listView.group !== 'beint' ? ' ferd-13' : '') + (late ? ' ferd-sein' : ''));
     const minutes = Math.ceil((ride.at - now) / minute);
     const departure = element('span', '', 'ferd-timi ferd-brott');
     departure.append(element('span', timestring(ride.at)), element('small', 'Brottför'));
     const arrival = element('span', '', 'ferd-timi ferd-koma');
     arrival.append(element('span', timestring(atHome)), element('small', 'Heima'));
-    button.append(routesFor(ride.connection), element('span', minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
+    button.append(routesFor(ride.connection), element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
       departure, arrival);
     if (chosen) {
       const details = element('span', '', 'ferd-nanar');

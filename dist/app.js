@@ -545,7 +545,13 @@ function walksFor(trip) {
 }
 
 function renderTripList(rides, now) {
-  const upcomingRides = rides.filter(trip => trip.at >= now).sort((a, b) => a.at - b.at);
+  // Ferð sem ekki næst lengur (komið fram yfir „Út úr húsi“) er merkt í eina mínútu og svo falin.
+  const leaveAt = trip => trip.at - walksFor(trip).home * minute;
+  const upcomingRides = rides.filter(trip => trip.at >= now && now <= leaveAt(trip) + minute).sort((a, b) => a.at - b.at);
+  for (const trip of upcomingRides) {
+    const leave = leaveAt(trip);
+    nextBoardChange = Math.min(nextBoardChange, (leave >= now ? leave : leave + minute) + 1);
+  }
   const soon = upcomingRides.filter(trip => trip.at <= now + 60 * minute);
   let shown = soon.length >= 4 ? soon : upcomingRides.slice(0, 4);
   if (listView.group) shown = shown.filter(trip => (trip.number === '13') === (listView.group === 'beint'));
@@ -585,7 +591,9 @@ function renderTripList(rides, now) {
       previousStop = from;
     }
     const item = document.createElement('li');
-    const button = element('button', '', 'ferd' + (trip.number === '13' && listView.group !== 'beint' ? ' ferd-13' : ''));
+    const late = now > trip.at - home * minute;
+    const button = element('button', '', 'ferd' + (trip.number === '13' && listView.group !== 'beint' ? ' ferd-13' : '') +
+      (late ? ' ferd-sein' : ''));
     button.type = 'button';
     button.dataset.ride = key;
     button.setAttribute('aria-pressed', String(chosen));
@@ -597,7 +605,7 @@ function renderTripList(rides, now) {
     departure.append(departureTime, element('small', 'Brottför'));
     const arrival = element('span', '', 'ferd-timi ferd-koma');
     arrival.append(element('span', (trip.estimatedArrival ? '≈' : '') + formatTime(inWork)), element('small', work ? 'Í vinnu' : 'Koma'));
-    button.append(routeBadge(trip.number), element('span', minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
+    button.append(routeBadge(trip.number), element('span', late ? 'Of seint' : minutes > 0 ? minutes + ' mín.' : 'Núna', 'ferd-bid'),
       departure, arrival);
     if (chosen) {
       const details = element('span', '', 'ferd-nanar');

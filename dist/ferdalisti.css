@@ -36,3 +36,5 @@
 .ferd > .route-group { grid-area:leid; flex-wrap:nowrap; gap:3px; color:var(--muted); font-weight:700; }
 .ferd > .route-group .route { min-width:1.9rem; padding:5px 4px; font-size:.95rem; }
 .ferd-nanar-skipti { grid-column:1 / -1; color:var(--ink); }
+.ferd-sein > :not(.ferd-bid):not(.ferd-nanar) { opacity:.45; }
+.ferd-sein .ferd-bid { color:var(--late); font-size:.95rem; }
